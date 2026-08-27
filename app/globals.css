@@ -442,7 +442,9 @@ h3 {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 44px;
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--hairline);
 }
 
 .faces {
@@ -488,11 +490,18 @@ h3 {
   font-weight: 500;
 }
 
+/* The artwork carries its own pale frame; the card border and oversized
+   corner fold that frame into the page instead of letting it float. */
 .hero__visual {
   position: relative;
+  background: #f0f3ed;
+  border: 1px solid var(--hairline);
+  border-radius: 3px 72px 3px 3px;
+  overflow: hidden;
 }
 
 .hero__photo {
+  display: block;
   width: 100%;
   height: auto;
 }
