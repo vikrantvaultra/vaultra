@@ -3,16 +3,19 @@
 import { useRef, useState } from "react";
 import { Eyebrow } from "@/components/Eyebrow";
 
+/* Row n on the left pairs with row n on the right. */
 const without = [
   "Slow handoffs & scattered tools",
   "Expensive, error-prone payroll",
   "Work stops when people do",
+  "Every answer waits for a person",
 ];
 
 const withUs = [
   "Instant execution, every time",
   "Clean data, zero rework",
   "24/7 operational reliability",
+  "Replies in under a minute",
 ];
 
 const MIN = 20;
@@ -78,6 +81,9 @@ export function Contrast() {
                 <li key={line}>{line}</li>
               ))}
             </ul>
+            <p className="vs__foot">
+              The bill <b>₹3–6 lakh a year in salary</b>
+            </p>
           </div>
           <div
             className="vs__gutter"
@@ -91,6 +97,9 @@ export function Contrast() {
             onKeyDown={onKeyDown}
           >
             <span className="vs__rule" aria-hidden="true" />
+            <span className="vs__grip" aria-hidden="true">
+              ⇄
+            </span>
           </div>
           <div className="vs__panel vs__panel--with on-dark">
             <span className="vs__label">With Vaultra</span>
@@ -100,6 +109,9 @@ export function Contrast() {
                 <li key={line}>{line}</li>
               ))}
             </ul>
+            <p className="vs__foot">
+              The payback <b>under 4 months, typically</b>
+            </p>
           </div>
         </div>
       </div>

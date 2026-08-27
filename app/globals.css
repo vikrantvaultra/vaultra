@@ -576,8 +576,9 @@ h3 {
 }
 
 .vs__panel {
-  padding: clamp(28px, 3.6vw, 52px);
-  min-height: 290px;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(26px, 3.2vw, 44px);
   overflow: hidden;
 }
 
@@ -603,6 +604,28 @@ h3 {
   width: 3px;
   transform: translateX(-50%);
   background: var(--mint);
+}
+
+.vs__grip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  box-shadow: var(--chip-shadow);
+  color: var(--ink);
+  font-size: 13px;
+}
+
+.vs__gutter:hover .vs__grip,
+.vs__gutter:focus-visible .vs__grip {
+  border-color: var(--mint-deep);
 }
 
 .vs__label {
@@ -632,13 +655,13 @@ h3 {
 
 .vs__panel ul {
   list-style: none;
-  display: grid;
-  gap: 15px;
 }
 
 .vs__panel li {
   display: flex;
   gap: 12px;
+  padding: 13px 0;
+  border-top: 1px solid rgba(13, 59, 46, 0.1);
   font-family: var(--font-mono-stack);
   font-size: 12.5px;
   letter-spacing: 0.02em;
@@ -653,12 +676,43 @@ h3 {
 
 .vs__panel--with li {
   color: var(--sage-soft);
+  border-top-color: rgba(255, 255, 255, 0.1);
 }
 
 .vs__panel--with li::before {
   content: "✓";
   color: var(--mint);
   flex: none;
+}
+
+.vs__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid rgba(13, 59, 46, 0.15);
+  font-family: var(--font-mono-stack);
+  font-size: 10.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.vs__foot b {
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.vs__panel--with .vs__foot {
+  border-top-color: var(--hairline-dark);
+  color: var(--sage-soft);
+}
+
+.vs__panel--with .vs__foot b {
+  color: var(--mint);
 }
 
 /* ---------------------------------------------------------- solutions */
