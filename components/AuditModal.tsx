@@ -13,15 +13,18 @@ export function AuditTrigger({
   label,
   variant = "solid",
   size = "lg",
+  block = false,
 }: {
   label: string;
   variant?: "solid" | "outline";
   size?: "lg" | "sm";
+  block?: boolean;
 }) {
   const classes = [
     "btn",
     variant === "outline" ? "btn--outline" : "",
     size === "sm" ? "btn--sm" : "",
+    block ? "btn--block" : "",
   ]
     .filter(Boolean)
     .join(" ");

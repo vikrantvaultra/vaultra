@@ -81,7 +81,11 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en-IN" className={`${outfit.variable} ${dmMono.variable}`}>
+    <html
+      lang="en-IN"
+      className={`${outfit.variable} ${dmMono.variable}`}
+      data-scroll-behavior="smooth"
+    >
       <body>
         {children}
         <script

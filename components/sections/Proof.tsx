@@ -30,62 +30,90 @@ const slides = [
 export function Proof() {
   const [active, setActive] = useState(0);
   const slide = slides[active];
+  const step = (delta: number) =>
+    setActive((i) => (i + delta + slides.length) % slides.length);
 
   return (
     <section className="section section--band" id="proof">
-      <div className="wrap proof__grid">
-        <div>
-          <Eyebrow>Real people. Real operating leverage.</Eyebrow>
-          <h2 data-reveal>
-            <span className="line">They got their</span>
-            <span className="line line--sage">time back.</span>
-          </h2>
-
+      <div className="wrap">
+        <div className="proof__head">
+          <div>
+            <Eyebrow>Real people. Real operating leverage.</Eyebrow>
+            <h2 data-reveal>
+              <span className="line">They got their</span>
+              <span className="line line--sage">time back.</span>
+            </h2>
+          </div>
           <p className="stars" data-reveal>
             <span aria-hidden="true">★★★★★</span> 5.0 average rating
           </p>
+        </div>
 
-          <figure className="tquote" data-reveal>
+        <div className="proof__grid" data-reveal>
+          <figure className="tcard" aria-live="polite">
+            <span className="tcard__mark" aria-hidden="true">
+              &ldquo;
+            </span>
             <blockquote>
               <p>&ldquo;{slide.quote}&rdquo;</p>
             </blockquote>
-            <figcaption className="tquote__by">
-              <span className="face face--lg" style={{ background: slide.bg }} aria-hidden="true">
-                {slide.initials}
-              </span>
-              <span>
-                <b>{slide.name}</b>
-                <span className="tquote__role">
-                  {slide.role} <i>✓ verified</i>
+            <figcaption className="tcard__foot">
+              <span className="tcard__by">
+                <span
+                  className="face face--lg"
+                  style={{ background: slide.bg }}
+                  aria-hidden="true"
+                >
+                  {slide.initials}
                 </span>
+                <span>
+                  <b>{slide.name}</b>
+                  <span className="tcard__role">
+                    {slide.role} <i>✓ verified</i>
+                  </span>
+                </span>
+              </span>
+
+              <span className="tctrl">
+                <button
+                  type="button"
+                  aria-label="Previous testimonial"
+                  onClick={() => step(-1)}
+                >
+                  ←
+                </button>
+                <span className="tdots" role="tablist" aria-label="Testimonials">
+                  {slides.map((s, i) => (
+                    <button
+                      key={s.name}
+                      type="button"
+                      role="tab"
+                      aria-selected={active === i}
+                      aria-label={`Testimonial ${i + 1}: ${s.name}`}
+                      className={active === i ? "is-active" : ""}
+                      onClick={() => setActive(i)}
+                    />
+                  ))}
+                </span>
+                <button
+                  type="button"
+                  aria-label="Next testimonial"
+                  onClick={() => step(1)}
+                >
+                  →
+                </button>
               </span>
             </figcaption>
           </figure>
 
-          <div className="tdots" role="tablist" aria-label="Testimonials">
-            {slides.map((s, i) => (
-              <button
-                key={s.name}
-                type="button"
-                role="tab"
-                aria-selected={active === i}
-                aria-label={`Testimonial ${i + 1}: ${s.name}`}
-                className={active === i ? "is-active" : ""}
-                onClick={() => setActive(i)}
-              />
-            ))}
+          <div className="proof__stat on-dark">
+            <span className="proof__mark" aria-hidden="true">
+              &ldquo;
+            </span>
+            <span className="proof__n">+42%</span>
+            <p>average operating margin improvement across our first 90 days together.</p>
+            <p className="proof__statfoot">Sample figure · measured over 90 days</p>
           </div>
-        </div>
-
-        <div className="proof__stat on-dark" data-reveal>
-          <span className="proof__mark" aria-hidden="true">
-            &ldquo;
-          </span>
-          <span className="proof__n">+42%</span>
-          <p>
-            average operating margin improvement across our first 90 days together.
-          </p>
-          <span className="proof__hr" aria-hidden="true" />
         </div>
       </div>
     </section>
