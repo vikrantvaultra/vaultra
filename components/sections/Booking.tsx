@@ -1,7 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useState, type FormEvent } from "react";
+import { Folio } from "@/components/Folio";
+import { Plate } from "@/components/Plate";
+import { Slots } from "@/components/Slots";
+import { Stamp } from "@/components/Stamp";
 import { reassurance, siteConfig, whatsappHref } from "@/lib/siteConfig";
 
 const ENDPOINT = "https://api.web3forms.com/submit";
@@ -18,7 +21,7 @@ const SLOTS = (() => {
   return out;
 })();
 
-const DOW = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const DOW = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
 
 type Day = { dow: string; num: number; mon: string; iso: string };
 
@@ -28,7 +31,7 @@ function buildDays(): Day[] {
   return Array.from({ length: 14 }, (_, i) => {
     const d = new Date(now.getTime() + i * 86400000);
     return {
-      dow: DOW[d.getDay()].toUpperCase(),
+      dow: DOW[d.getDay()],
       num: d.getDate(),
       mon: d.toLocaleString("en-GB", { month: "short" }).toUpperCase(),
       iso: `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(
@@ -40,15 +43,25 @@ function buildDays(): Day[] {
 
 const title = (s: string) => s.charAt(0) + s.slice(1).toLowerCase();
 
+const REQUIRED = {
+  name: "Please tell us your name.",
+  company: "Please tell us your company.",
+  phone: "We need a number to call you back on.",
+  work: "One line is enough — what does your team do by hand?",
+} as const;
+
+type FieldName = keyof typeof REQUIRED;
+
 export function Booking() {
   /**
-   * The dates depend on the visitor's own clock, so they are built after mount
-   * — a server-rendered fortnight could be a day out, and would not match.
+   * The dates depend on the visitor's own clock, so they are built after
+   * mount — a server-rendered fortnight could be a day out, and would not
+   * match on rehydration.
    */
   const [days, setDays] = useState<Day[] | null>(null);
   const [day, setDay] = useState(0);
   const [slot, setSlot] = useState("");
-  const [more, setMore] = useState(false);
+  const [invalid, setInvalid] = useState<FieldName[]>([]);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
@@ -62,6 +75,9 @@ export function Booking() {
   const whenLabel =
     chosenDay && slot ? `${slot}, ${chosenDay.num} ${title(chosenDay.mon)} · IST` : "";
 
+  const clear = (name: FieldName) =>
+    setInvalid((prev) => (prev.includes(name) ? prev.filter((f) => f !== name) : prev));
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (pending) return;
@@ -70,7 +86,17 @@ export function Booking() {
     const data = new FormData(form);
 
     // Honeypot: only a bot fills this in.
-    if (data.get("botcheck")) return;
+    if (data.get("website")) return;
+
+    const missing = (Object.keys(REQUIRED) as FieldName[]).filter(
+      (name) => !String(data.get(name) || "").trim(),
+    );
+    if (missing.length > 0) {
+      setInvalid(missing);
+      form.querySelector<HTMLElement>(`[name="${missing[0]}"]`)?.focus();
+      return;
+    }
+    setInvalid([]);
 
     const phone = String(data.get("phone") || "");
 
@@ -93,9 +119,9 @@ export function Booking() {
           }`,
           from_name: "Vaultra website",
           name: data.get("name"),
+          company: data.get("company"),
           "whatsapp number": phone,
-          "repetitive work": data.get("pain"),
-          company: data.get("company") || "—",
+          "repetitive work": data.get("work"),
           budget: data.get("budget") || "—",
           "requested slot": whenLabel || "No slot picked",
           "requested date": chosenDay?.iso || "—",
@@ -120,38 +146,18 @@ export function Booking() {
     }
   }
 
+  const fieldClass = (name: FieldName) =>
+    `field${invalid.includes(name) ? " field--invalid" : ""}`;
+
   return (
-    <section className="booking" id="book">
-      <div className="shell">
-        <div className="head-split booking__head">
-          <div className="head-split__text">
-            <p className="eyebrow" data-reveal>
-              <span>07</span>
-              <span>Book the call</span>
-            </p>
-            <h2 className="h2" data-reveal>
-              Pick a time. Twenty minutes, on the phone.
-            </h2>
-            <p className="booking__sub" data-reveal>
-              Taking two builds for September. If both go, we will say so on the call rather than
-              hold you in a queue.
-            </p>
-          </div>
-          <figure className="figure booking__head-figure" data-reveal>
-            <Image
-              src="/images/chai-wall-clock.jpg"
-              alt="A cup of chai on a sunlit ledge with a brass wall clock behind it"
-              width={1600}
-              height={1066}
-              sizes="(max-width: 640px) 100vw, 340px"
-            />
-          </figure>
-        </div>
+    <section className="section book" id="book">
+      <div className="wrap">
+        <Folio n="06" label="Book the call" direction="आग्नेय · SE" quality="Agni · action" />
 
         {sent ? (
-          <div className="booking-confirm">
-            <p className="booking-confirm__label">Slot held</p>
-            <p className="booking-confirm__when">{sentWhen}</p>
+          <div className="received">
+            <Stamp strike="now">Received</Stamp>
+            <p className="received__when">{sentWhen}</p>
             <ul>
               <li>
                 {siteConfig.callers} calls you on {sentTo}.
@@ -159,136 +165,194 @@ export function Booking() {
               <li>
                 They will ask what repeats, who does it now, and which systems hold the data.
               </li>
-              <li>Twenty minutes. If automation won&apos;t help, they will say so on the call.</li>
-              <li>A WhatsApp confirmation follows in the next few minutes.</li>
+              <li>
+                Twenty minutes. If automation won&apos;t help, they will say so on the call.
+              </li>
+              <li>A confirmation follows within one working day, Monday to Saturday.</li>
             </ul>
           </div>
         ) : (
-          <div className="booking__grid">
-            <div className="booking-picker" data-reveal>
-              <div className="booking-picker__head">
-                <span className="label">Choose a day · next 2 weeks</span>
-                <span className="booking-picker__tz">IST (GMT+5:30)</span>
-              </div>
-
-              <div className="booking-days" role="group" aria-label="Choose a day">
-                {days
-                  ? days.map((d, i) => (
-                      <button
-                        type="button"
-                        key={d.iso}
-                        className="booking-day"
-                        aria-pressed={day === i}
-                        onClick={() => {
-                          setDay(i);
-                          setSlot("");
-                        }}
-                      >
-                        <span className="booking-day__dow">{d.dow}</span>
-                        <span className="booking-day__num">{d.num}</span>
-                        <span className="booking-day__mon">{d.mon}</span>
-                      </button>
-                    ))
-                  : Array.from({ length: 5 }, (_, i) => (
-                      <span
-                        key={i}
-                        className="booking-day booking-day--skeleton"
-                        aria-hidden="true"
-                      >
-                        <span className="booking-day__dow">···</span>
-                        <span className="booking-day__num">·</span>
-                        <span className="booking-day__mon">···</span>
-                      </span>
-                    ))}
-              </div>
-
-              <div className="booking-picker__time">
-                <span className="label">Choose a time</span>
-                <span className="booking-picker__range">
-                  {dayLabel ? `9:00 am – 8:00 pm · ${dayLabel}` : "9:00 am – 8:00 pm"}
-                </span>
-              </div>
-              <select
-                aria-label="Choose a time"
-                value={slot}
-                onChange={(e) => setSlot(e.target.value)}
-              >
-                <option value="">Select a time</option>
-                {SLOTS.map((s) => (
-                  <option key={s} value={s}>
-                    {s}
-                  </option>
-                ))}
-              </select>
+          <div className="book__grid">
+            <div className="book__side">
+              <h2 data-reveal>Tell us what your team does by hand.</h2>
+              <p data-reveal>
+                Twenty minutes on a call is enough for us to say whether this is worth building.
+                If it isn&apos;t, we&apos;ll tell you that and leave you alone.
+              </p>
+              <ul className="book__checks" data-reveal>
+                <li>
+                  <span aria-hidden="true">✓</span>We reply within one working day, Monday to
+                  Saturday.
+                </li>
+                <li>
+                  <span aria-hidden="true">✓</span>
+                  {reassurance}
+                </li>
+                <li>
+                  <span aria-hidden="true">✓</span>One number in writing within two working days
+                  of the call.
+                </li>
+                <li>
+                  <span aria-hidden="true">✓</span>If the software cannot do what the scope says,
+                  you don&apos;t pay the balance.
+                </li>
+              </ul>
+              <Plate
+                src="/images/chai-wall-clock.jpg"
+                alt="A cup of chai on a sunlit ledge with a brass wall clock behind it"
+                width={1600}
+                height={1066}
+                n="07"
+                caption="Twenty minutes, at a time you pick"
+                sizes="(max-width: 900px) 100vw, 400px"
+                className="plate--spaced"
+              />
             </div>
 
-            <form className="booking-form" data-reveal onSubmit={handleSubmit}>
-              <label>
-                <span className="label">Name</span>
-                <input className="field" name="name" autoComplete="name" required />
-              </label>
-              <label>
-                <span className="label">WhatsApp number</span>
+            <form className="form" data-reveal onSubmit={handleSubmit} noValidate>
+              <div className="form__top">
+                <h3>Book the 20-minute call</h3>
+                <Slots />
+              </div>
+
+              <div className={fieldClass("name")}>
+                <label htmlFor="fName">Name</label>
+                <input id="fName" name="name" autoComplete="name" onInput={() => clear("name")} />
+                {invalid.includes("name") ? <p className="field__err">{REQUIRED.name}</p> : null}
+              </div>
+
+              <div className={fieldClass("company")}>
+                <label htmlFor="fCompany">Company</label>
                 <input
-                  className="field"
+                  id="fCompany"
+                  name="company"
+                  autoComplete="organization"
+                  onInput={() => clear("company")}
+                />
+                {invalid.includes("company") ? (
+                  <p className="field__err">{REQUIRED.company}</p>
+                ) : null}
+              </div>
+
+              <div className={fieldClass("phone")}>
+                <label htmlFor="fPhone">Phone or WhatsApp</label>
+                <input
+                  id="fPhone"
                   name="phone"
                   type="tel"
                   inputMode="tel"
                   placeholder="+91"
                   autoComplete="tel"
-                  required
+                  onInput={() => clear("phone")}
                 />
-              </label>
-              <label>
-                <span className="label">What repetitive work is eating the most time?</span>
-                <textarea className="field" name="pain" rows={3} />
-              </label>
+                {invalid.includes("phone") ? <p className="field__err">{REQUIRED.phone}</p> : null}
+              </div>
 
-              <button
-                type="button"
-                className="booking-form__more"
-                aria-expanded={more}
-                onClick={() => setMore((v) => !v)}
-              >
-                {more ? "Hide extra detail" : "Add more detail"}
-              </button>
-              {more ? (
-                <div className="booking-form__extra">
-                  <label>
-                    <span className="label">Company (optional)</span>
-                    <input className="field" name="company" autoComplete="organization" />
-                  </label>
-                  <label>
-                    <span className="label">Budget in mind (optional)</span>
-                    <input className="field" name="budget" />
-                  </label>
+              <div className={fieldClass("work")}>
+                <label htmlFor="fWork">What repetitive work is eating the most time?</label>
+                <textarea
+                  id="fWork"
+                  name="work"
+                  onInput={() => clear("work")}
+                  placeholder="One line is enough — e.g. “two people type vendor invoices into Tally all morning”"
+                />
+                {invalid.includes("work") ? <p className="field__err">{REQUIRED.work}</p> : null}
+              </div>
+
+              <div className="field">
+                <label htmlFor="fBudget">Budget in mind (optional)</label>
+                <select id="fBudget" name="budget" defaultValue="Not sure yet">
+                  <option>Not sure yet</option>
+                  <option>Under ₹1 lakh</option>
+                  <option>₹1 – 2 lakh</option>
+                  <option>₹2 – 3 lakh</option>
+                  <option>Above ₹3 lakh</option>
+                </select>
+              </div>
+
+              <div className="picker">
+                <div className="picker__head">
+                  <span>Pick a day · next 2 weeks</span>
+                  <span className="picker__tz">IST (GMT+5:30)</span>
                 </div>
-              ) : null}
+                <div className="days" role="group" aria-label="Choose a day">
+                  {days
+                    ? days.map((d, i) => (
+                        <button
+                          type="button"
+                          key={d.iso}
+                          className="day"
+                          aria-pressed={day === i}
+                          onClick={() => {
+                            setDay(i);
+                            setSlot("");
+                          }}
+                        >
+                          <span className="day__dow">{d.dow}</span>
+                          <span className="day__num">{d.num}</span>
+                          <span className="day__mon">{d.mon}</span>
+                        </button>
+                      ))
+                    : Array.from({ length: 5 }, (_, i) => (
+                        <span key={i} className="day day--skeleton" aria-hidden="true">
+                          <span className="day__dow">···</span>
+                          <span className="day__num">·</span>
+                          <span className="day__mon">···</span>
+                        </span>
+                      ))}
+                </div>
+                <div className="field" style={{ marginTop: 14, marginBottom: 0 }}>
+                  <label htmlFor="fSlot">
+                    {dayLabel ? `Time · ${dayLabel}` : "Time"}
+                  </label>
+                  <select
+                    id="fSlot"
+                    value={slot}
+                    onChange={(event) => setSlot(event.target.value)}
+                  >
+                    <option value="">No preference — call me any time</option>
+                    {SLOTS.map((s) => (
+                      <option key={s} value={s}>
+                        {s}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
               {/* Honeypot — hidden from people, irresistible to bots. */}
-              <input
-                type="checkbox"
-                name="botcheck"
-                className="visually-hidden"
-                tabIndex={-1}
-                autoComplete="off"
-              />
+              <div className="visually-hidden" aria-hidden="true">
+                <label>
+                  Leave this field empty
+                  <input name="website" tabIndex={-1} autoComplete="off" />
+                </label>
+              </div>
 
-              <button type="submit" className="cta cta--lg booking-form__submit" disabled={pending}>
-                {pending ? "Sending…" : slot ? `Confirm ${slot}` : "Confirm the call"}
-                <span className="cta__chip">20 MIN</span>
+              <button type="submit" className="btn btn--glint btn--block" disabled={pending}>
+                <span>
+                  {pending
+                    ? "Sending…"
+                    : slot
+                      ? `Confirm ${slot}`
+                      : "Book my free 20-minute call"}
+                </span>
+                <span className="btn__arrow" aria-hidden="true">
+                  →
+                </span>
               </button>
 
               {error ? (
-                <p className="booking-form__error" role="alert">
+                <p className="form__error" role="alert">
                   {error}
                 </p>
               ) : null}
 
-              <p className="booking-form__note">{reassurance}</p>
-              <p className="booking-form__alt">
-                Would rather type than talk?{" "}
-                <a href={whatsappHref}>Message us on WhatsApp</a> — same people answer.
+              <p className="reassure" style={{ textAlign: "center" }}>
+                {reassurance}
+              </p>
+              <p className="form__alt">
+                Would rather type than talk? <a href={whatsappHref}>Message us on WhatsApp</a> —
+                the same people answer.
               </p>
             </form>
           </div>

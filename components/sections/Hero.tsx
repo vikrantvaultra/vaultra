@@ -1,85 +1,97 @@
 import { Cta } from "@/components/Cta";
-import { reassurance } from "@/lib/siteConfig";
-
-const facts = [
-  {
-    label: "Works with your stack",
-    value: "Tally, Zoho, SAP, Excel, WhatsApp — or whatever you already run",
-  },
-  {
-    label: "Price certainty",
-    value: "One fixed number, in writing, in two working days",
-  },
-  {
-    label: "No lock-in",
-    value: "Code and credentials handed to your team",
-  },
-  {
-    label: "Where we are",
-    value: "Mumbai. On a call in twenty minutes",
-  },
-];
+import { Folio } from "@/components/Folio";
+import { Stamp } from "@/components/Stamp";
+import { reassurance, siteConfig } from "@/lib/siteConfig";
 
 export function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="hero__grid">
-        <div>
-          <h1>Your team is still typing vendor invoices by hand.</h1>
-          <p className="hero__lede">
-            We replace that work with software built around whatever you already run — Tally,
-            Zoho, SAP, a custom ERP, Excel, WhatsApp. Two to four weeks. One fixed price, agreed
-            in writing before anyone starts.
-          </p>
-          <div className="hero__cta">
-            <Cta size="lg">Book a 20-minute call</Cta>
-            <p className="hero__note">{reassurance}</p>
-          </div>
-        </div>
+      <div className="wrap">
+        <Folio n="00" label={siteConfig.tagline} direction="ईशान्य · NE" quality="clarity" />
 
-        {/* The invoice that arrives, and the voucher it becomes. */}
-        <div className="hero__proof" aria-hidden="true">
-          <div className="doc-invoice">
-            <div className="doc-invoice__from">Vendor mail · attachment.pdf</div>
-            <div className="doc-invoice__vendor">Shree Metals Pvt Ltd</div>
-            <div className="doc-invoice__ref">Tax Invoice SM/2114 · PO 4471</div>
-            <div className="doc-invoice__lines">
-              <span />
-              <span style={{ width: "78%" }} />
-              <span style={{ width: "54%" }} />
+        <div className="hero__grid">
+          <div>
+            <h1>Your team is still typing invoices by hand.</h1>
+            <p className="lede">
+              We find the repetitive work eating your staff&apos;s hours — invoice entry,
+              quotations, weekly reports, after-hours enquiries — and replace it with software
+              built around whatever you already run. Two to four weeks. One fixed price, agreed
+              in writing before anyone starts.
+            </p>
+
+            <div className="anchor" data-reveal>
+              <span>
+                Typical manual waste <b>₹3–6 lakh a year</b>
+              </span>
+              <span className="is-pay">
+                Typical build pays for itself <b>in under 4 months</b>
+              </span>
             </div>
-            <dl className="doc-invoice__total">
-              <dt>Total</dt>
-              <dd>₹4,18,600</dd>
-            </dl>
+
+            <div className="hero__ctas">
+              <Cta glint>Book my free 20-minute call</Cta>
+              <a className="btn-ghost" href="#hours">
+                Count my hours first
+              </a>
+            </div>
+            <p className="reassure">
+              {reassurance} And we&apos;ll leave you alone if it won&apos;t.
+            </p>
+
+            <div className="hero__trust" data-reveal>
+              <Stamp>NDA first</Stamp>
+              <Stamp>Fixed price</Stamp>
+              <Stamp>No lock-in</Stamp>
+              <p>Works with Tally, Zoho, SAP, Excel, WhatsApp — or whatever you run.</p>
+            </div>
           </div>
 
-          <div className="doc-voucher">
-            <div className="doc-voucher__head">
-              <span>Tally · Purchase voucher</span>
-              <span className="doc-voucher__badge">STAGED</span>
+          {/* One vendor invoice, and the Tally voucher it becomes. */}
+          <div
+            className="ruled voucher"
+            data-reveal
+            aria-label="Example: a vendor invoice staged as a Tally purchase voucher"
+            role="img"
+          >
+            <div className="voucher__head">
+              <span>Vendor mail · attachment.pdf</span>
+              <span>Read</span>
             </div>
-            <dl className="doc-voucher__rows">
-              <dt>Purchase A/c</dt>
-              <dd>4,18,600.00</dd>
-              <dt>Shree Metals Pvt Ltd</dt>
-              <dd>Cr 4,18,600.00</dd>
-              <dt>PO match</dt>
-              <dd className="is-match">4471 ✓</dd>
-            </dl>
-            <div className="doc-voucher__foot">Waiting on one approval click.</div>
+            <div className="voucher__body">
+              <div className="v-row">
+                <span className="v-row__l">Shree Metals Pvt Ltd</span>
+                <span className="v-row__r">Inv SM/2114</span>
+              </div>
+              <div className="v-row">
+                <span className="v-row__l">Against purchase order</span>
+                <span className="v-row__r">PO 4471 ✓ matched</span>
+              </div>
+              <div className="v-row v-row--strong">
+                <span className="v-row__l">Invoice total</span>
+                <span className="v-row__r">₹ 4,18,600.00</span>
+              </div>
+              <div className="v-sep">
+                <span>— staged in Tally as purchase voucher —</span>
+              </div>
+              <div className="v-row">
+                <span className="v-row__l">Purchase A/c</span>
+                <span className="v-row__r">Dr 4,18,600.00</span>
+              </div>
+              <div className="v-row">
+                <span className="v-row__l">Shree Metals Pvt Ltd</span>
+                <span className="v-row__r is-credit">Cr 4,18,600.00</span>
+              </div>
+              <span className="voucher__stamp">
+                <Stamp strike="scroll">Staged</Stamp>
+              </span>
+            </div>
+            <div className="voucher__foot">
+              <span>Waiting on one approval click. Nothing posts unseen.</span>
+              <span className="voucher__ok">HUMAN APPROVES</span>
+            </div>
           </div>
         </div>
       </div>
-
-      <dl className="hero__facts">
-        {facts.map((fact) => (
-          <div key={fact.label}>
-            <dt>{fact.label}</dt>
-            <dd>{fact.value}</dd>
-          </div>
-        ))}
-      </dl>
     </section>
   );
 }

@@ -1,27 +1,28 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Young_Serif, Public_Sans, IBM_Plex_Mono } from "next/font/google";
 import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
+const youngSerif = Young_Serif({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
-  variable: "--font-instrument-serif",
+  variable: "--font-display",
 });
 
-const ibmPlexSans = IBM_Plex_Sans({
+const publicSans = Public_Sans({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-ibm-plex-sans",
+  variable: "--font-body",
 });
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600"],
   display: "swap",
-  variable: "--font-ibm-plex-mono",
+  variable: "--font-mono",
 });
 
 const ogImage = {
@@ -51,14 +52,14 @@ export const metadata: Metadata = {
     type: "website",
     url: siteConfig.url,
     siteName: "Vaultra",
-    title: "Your team is still typing vendor invoices by hand.",
+    title: "Your team is still typing invoices by hand.",
     description: siteConfig.description,
     locale: "en_IN",
     images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Your team is still typing vendor invoices by hand.",
+    title: "Your team is still typing invoices by hand.",
     description: siteConfig.description,
     images: [ogImage.url],
   },
@@ -66,7 +67,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f7f4ed",
+  themeColor: "#faf5e9",
   width: "device-width",
   initialScale: 1,
 };
@@ -90,7 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en-IN"
-      className={`${instrumentSerif.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
+      className={`${youngSerif.variable} ${publicSans.variable} ${ibmPlexMono.variable}`}
     >
       <body>
         {children}

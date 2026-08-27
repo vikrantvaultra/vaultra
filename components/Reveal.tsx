@@ -3,13 +3,16 @@
 import { useEffect } from "react";
 
 /**
- * Fades and lifts every [data-reveal] element as it enters the viewport, then
- * stops watching it. Elements are revealed outright when the visitor has asked
- * for reduced motion, and when IntersectionObserver is unavailable.
+ * Fades and lifts every [data-reveal] element as it enters the viewport, and
+ * strikes every [data-strike] stamp, then stops watching it. Everything is
+ * revealed outright when the visitor has asked for reduced motion, and when
+ * IntersectionObserver is unavailable.
  */
 export function Reveal() {
   useEffect(() => {
-    const nodes = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const nodes = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-reveal], [data-strike]"),
+    );
     if (nodes.length === 0) return;
 
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
