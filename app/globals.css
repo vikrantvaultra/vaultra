@@ -515,14 +515,20 @@ h3 {
 
 .stats__grid {
   display: grid;
-  grid-template-columns: repeat(3, max-content) 1fr;
-  gap: clamp(24px, 4vw, 56px);
+  grid-template-columns: repeat(3, 1fr) 1.35fr;
   align-items: center;
 }
 
-.stat {
-  padding-right: clamp(24px, 4vw, 56px);
-  border-right: 1px solid var(--hairline-dark);
+.stats__grid > * {
+  padding-inline: clamp(20px, 2.6vw, 40px);
+}
+
+.stats__grid > *:first-child {
+  padding-left: 0;
+}
+
+.stats__grid > * + * {
+  border-left: 1px solid var(--hairline-dark);
 }
 
 .stat__n {
@@ -550,19 +556,19 @@ h3 {
 }
 
 .stats__tag {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-self: end;
   font-family: var(--font-mono-stack);
   font-size: 11px;
   letter-spacing: 0.04em;
+  line-height: 1.8;
   color: rgba(255, 255, 255, 0.85);
-  max-width: 26ch;
+  max-width: 32ch;
 }
 
 .stats__tag span {
+  display: block;
+  margin-bottom: 6px;
   color: var(--mint);
+  font-size: 14px;
 }
 
 /* ------------------------------------------------------------ contrast */
@@ -1762,13 +1768,12 @@ h3 {
     gap: 28px;
   }
 
-  .stat {
-    border-right: 0;
-    padding-right: 0;
+  .stats__grid > * {
+    padding-inline: 0;
   }
 
-  .stats__tag {
-    justify-self: start;
+  .stats__grid > * + * {
+    border-left: 0;
   }
 
   .contrast__head {

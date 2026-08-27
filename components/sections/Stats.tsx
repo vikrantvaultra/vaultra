@@ -18,7 +18,8 @@ export function Stats() {
           </div>
         ))}
         <p className="stats__tag">
-          <span aria-hidden="true">✦</span> Built for teams who refuse to stay busy
+          <span aria-hidden="true">✦</span>
+          Built for teams who refuse to stay busy
         </p>
       </div>
     </section>
