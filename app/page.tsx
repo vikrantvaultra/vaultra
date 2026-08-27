@@ -1,32 +1,33 @@
-import { BookingProvider } from "@/components/BookingProvider";
-import { BookingModal } from "@/components/BookingModal";
 import { Header } from "@/components/Header";
-import { MobileCtaBar } from "@/components/MobileCtaBar";
 import { Reveal } from "@/components/Reveal";
+import { StickyBars } from "@/components/StickyBars";
 import { Hero } from "@/components/sections/Hero";
-import { Problem } from "@/components/sections/Problem";
+import { Calculator } from "@/components/sections/Calculator";
 import { Build } from "@/components/sections/Build";
+import { Proof } from "@/components/sections/Proof";
 import { Process } from "@/components/sections/Process";
+import { Promise as PromiseSection } from "@/components/sections/Promise";
 import { Answers } from "@/components/sections/Answers";
-import { Contact } from "@/components/sections/Contact";
+import { Booking } from "@/components/sections/Booking";
 import { Footer } from "@/components/sections/Footer";
 
 export default function Page() {
   return (
-    <BookingProvider>
+    <>
       <Reveal />
       <Header />
       <main>
         <Hero />
-        <Problem />
+        <Calculator />
         <Build />
+        <Proof />
         <Process />
+        <PromiseSection />
         <Answers />
-        <Contact />
+        <Booking />
       </main>
       <Footer />
-      <MobileCtaBar />
-      <BookingModal />
-    </BookingProvider>
+      <StickyBars />
+    </>
   );
 }

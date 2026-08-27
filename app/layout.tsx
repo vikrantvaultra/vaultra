@@ -1,28 +1,35 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Instrument_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Instrument_Serif, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
-const newsreader = Newsreader({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   weight: ["400"],
   display: "swap",
-  variable: "--font-newsreader",
+  variable: "--font-instrument-serif",
 });
 
-const instrumentSans = Instrument_Sans({
+const ibmPlexSans = IBM_Plex_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: "swap",
-  variable: "--font-instrument-sans",
+  variable: "--font-ibm-plex-sans",
 });
 
 const ibmPlexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500"],
   display: "swap",
   variable: "--font-ibm-plex-mono",
 });
+
+const ogImage = {
+  url: "/images/og.jpg",
+  width: 1200,
+  height: 630,
+  alt: "A long row of identical printed invoices",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
@@ -44,29 +51,22 @@ export const metadata: Metadata = {
     type: "website",
     url: siteConfig.url,
     siteName: "Vaultra",
-    title: "Your team is still typing invoices by hand.",
+    title: "Your team is still typing vendor invoices by hand.",
     description: siteConfig.description,
     locale: "en_IN",
-    images: [
-      {
-        url: "/images/hero-office.jpg",
-        width: 1376,
-        height: 768,
-        alt: "A quiet mid-market office in Mumbai",
-      },
-    ],
+    images: [ogImage],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Your team is still typing invoices by hand.",
+    title: "Your team is still typing vendor invoices by hand.",
     description: siteConfig.description,
-    images: ["/images/hero-office.jpg"],
+    images: [ogImage.url],
   },
   robots: { index: true, follow: true },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#f8f6f1",
+  themeColor: "#f7f4ed",
   width: "device-width",
   initialScale: 1,
 };
@@ -86,15 +86,11 @@ const jsonLd = {
   serviceType: "Business process automation consultancy",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="en-IN"
-      className={`${newsreader.variable} ${instrumentSans.variable} ${ibmPlexMono.variable}`}
+      className={`${instrumentSerif.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable}`}
     >
       <body>
         {children}

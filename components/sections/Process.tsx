@@ -1,112 +1,78 @@
 import Image from "next/image";
-import { siteConfig } from "@/lib/siteConfig";
-import brassRods from "@/public/images/brass-rods.jpg";
 
 const steps = [
   {
-    num: "01",
-    title: "A call about one workflow",
-    body: "We walk the work end to end: what starts it, who touches it, where it stalls, and what it costs in hours. You leave knowing whether it is worth automating.",
-    duration: "20 minutes",
-    cost: "Free, and no follow-up sequence",
-    delay: 0,
+    n: "STEP 01",
+    title: "A 20-minute call",
+    body: "You describe the work that repeats. We say whether software should do it, and what we would build first.",
   },
   {
-    num: "02",
+    n: "STEP 02",
     title: "A fixed-scope build",
-    body: "One or two workflows, written into a scope you sign, built against your real documents and whatever systems hold them, tested with the people who do the work today, handed over with training.",
-    duration: "Two to four weeks",
-    cost: "Fixed price, quoted after the call. No hourly billing",
-    delay: 90,
+    body: "Scope, price and dates in writing within two working days. Two to four weeks to running software, with a review at the halfway mark.",
   },
   {
-    num: "03",
-    title: "Support and improvement",
-    body: "Hosting, monitoring and changes as your process shifts. Optional — plenty of clients take the build and run it themselves.",
-    duration: "Monthly, ongoing",
-    cost: "Flat retainer. Cancel with a month's notice",
-    delay: 180,
+    n: "STEP 03",
+    title: "Support, if you want it",
+    body: "Code and credentials go to your team either way. Monthly support is optional, not a condition.",
   },
 ];
 
-const pillars = [
-  {
-    title: "You work with the builders",
-    body: "A small senior team. No junior handoff, no account manager relaying questions.",
-  },
-  {
-    title: "A person approves the money",
-    body: "Anything touching payments, pricing or a customer reply is prepared by software and released by your team.",
-  },
-  {
-    title: "The work stays yours",
-    body: "Code, credentials and documentation are handed over. You are not locked into us to keep it running.",
-  },
+const terms = [
+  "You work with the people who build it.",
+  "A human approves anything touching money.",
+  "The work stays yours. No lock-in.",
 ];
 
 export function Process() {
   return (
-    <section id="process" className="section section--ruled">
-      <div className="shell">
-        <div className="process__head" data-reveal="0">
-          <div className="process__intro">
-            <p className="eyebrow">03 · How we work</p>
-            <h2 className="h2 h2--narrow">
-              Three steps, and you know the price at the second one.
-            </h2>
-            <p className="lede">
-              We scope by workflow, not by software. No discovery retainer, no
-              workshop phase. The first call is free and the build is quoted as
-              one number.
-            </p>
-          </div>
-
-          {siteConfig.showProcessImage ? (
-            <Image
-              className="photo process__photo"
-              src={brassRods}
-              alt="Three brass rods of decreasing length laid out in parallel on a pale surface"
-              sizes="(max-width: 860px) 100vw, 470px"
-            />
-          ) : null}
+    <section className="shell section process">
+      <div className="head-split process__head">
+        <div className="head-split__text">
+          <p className="eyebrow" data-reveal>
+            <span>04</span>
+            <span>How it works</span>
+          </p>
+          <p className="process__claim" data-reveal>
+            One number, in writing, within two working days.
+          </p>
         </div>
-
-        <div className="steps">
-          {steps.map((step, i) => (
-            <div
-              className={`step${i === 0 ? " step--first" : ""}`}
-              key={step.num}
-              data-reveal={step.delay}
-            >
-              <p className="step__num">{step.num}</p>
-              <h3 className="step__title">{step.title}</h3>
-              <p className="step__body">{step.body}</p>
-              <div className="step__meta">
-                <span className="step__meta-dim">
-                  HOW LONG&nbsp;&nbsp;{step.duration}
-                </span>
-                <span className="step__meta-key">
-                  COST&nbsp;&nbsp;{step.cost}
-                </span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <p className="process__pledge" data-reveal="0">
-          Every build is quoted as a single number, in writing, within two
-          working days of the call.
-        </p>
-
-        <div className="pillars" data-reveal="0">
-          {pillars.map((pillar) => (
-            <div className="pillar" key={pillar.title}>
-              <h3 className="pillar__title">{pillar.title}</h3>
-              <p className="pillar__body">{pillar.body}</p>
-            </div>
-          ))}
-        </div>
+        <figure className="figure head-split__figure process__head-figure" data-reveal>
+          <Image
+            src="/images/quote-paper-pen.jpg"
+            alt="A single sheet of paper held by a brass paperweight with a fountain pen beside it"
+            width={1600}
+            height={1066}
+            sizes="(max-width: 640px) 100vw, 320px"
+          />
+        </figure>
       </div>
+
+      <div className="process__steps">
+        {steps.map((step) => (
+          <div className="process__step" key={step.n} data-reveal>
+            <div className="process__step-n">{step.n}</div>
+            <h3>{step.title}</h3>
+            <p>{step.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <figure className="figure process__figure" data-reveal>
+        <Image
+          src="/images/handover-laptop-key.jpg"
+          alt="A closed dark green laptop with a brass key resting on its lid, beside a printed document"
+          width={1600}
+          height={1200}
+          sizes="(max-width: 640px) 100vw, 400px"
+        />
+      </figure>
+
+      <ul className="process__terms" data-reveal>
+        {terms.map((term) => (
+          <li key={term}>{term}</li>
+        ))}
+      </ul>
     </section>
   );
 }

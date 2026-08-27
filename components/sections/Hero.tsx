@@ -1,40 +1,85 @@
-import Image from "next/image";
-import { BookCallButton } from "@/components/BookCallButton";
+import { Cta } from "@/components/Cta";
 import { reassurance } from "@/lib/siteConfig";
-import heroOffice from "@/public/images/hero-office.jpg";
+
+const facts = [
+  {
+    label: "Works with your stack",
+    value: "Tally, Zoho, SAP, Excel, WhatsApp — or whatever you already run",
+  },
+  {
+    label: "Price certainty",
+    value: "One fixed number, in writing, in two working days",
+  },
+  {
+    label: "No lock-in",
+    value: "Code and credentials handed to your team",
+  },
+  {
+    label: "Where we are",
+    value: "Mumbai. On a call in twenty minutes",
+  },
+];
 
 export function Hero() {
   return (
-    <section id="top" className="hero">
-      <div className="shell">
-        <div className="hero__head">
-          <p className="hero__eyebrow">Automation consultancy · Mumbai</p>
-          <h1 className="hero__title">
-            Your team is still typing invoices by hand.
-          </h1>
-        </div>
-
-        <div className="hero__row">
-          <p className="hero__copy">
-            We find the repetitive work eating your staff&rsquo;s hours &mdash;
-            invoice entry, quotations, weekly reports, after-hours enquiries
-            &mdash; and replace it with software. Two to four weeks. A fixed
-            price agreed before anyone starts.
+    <section className="hero" id="top">
+      <div className="hero__grid">
+        <div>
+          <h1>Your team is still typing vendor invoices by hand.</h1>
+          <p className="hero__lede">
+            We replace that work with software built around whatever you already run — Tally,
+            Zoho, SAP, a custom ERP, Excel, WhatsApp. Two to four weeks. One fixed price, agreed
+            in writing before anyone starts.
           </p>
           <div className="hero__cta">
-            <BookCallButton variant="hero" />
-            <p className="note">{reassurance}</p>
+            <Cta size="lg">Book a 20-minute call</Cta>
+            <p className="hero__note">{reassurance}</p>
           </div>
         </div>
 
-        <Image
-          className="photo hero__photo"
-          src={heroOffice}
-          alt="A quiet mid-market office in Mumbai: rows of desks, a bundle of tied paper files and an open laptop on the front table"
-          sizes="(max-width: 1080px) 100vw, 1080px"
-          priority
-        />
+        {/* The invoice that arrives, and the voucher it becomes. */}
+        <div className="hero__proof" aria-hidden="true">
+          <div className="doc-invoice">
+            <div className="doc-invoice__from">Vendor mail · attachment.pdf</div>
+            <div className="doc-invoice__vendor">Shree Metals Pvt Ltd</div>
+            <div className="doc-invoice__ref">Tax Invoice SM/2114 · PO 4471</div>
+            <div className="doc-invoice__lines">
+              <span />
+              <span style={{ width: "78%" }} />
+              <span style={{ width: "54%" }} />
+            </div>
+            <dl className="doc-invoice__total">
+              <dt>Total</dt>
+              <dd>₹4,18,600</dd>
+            </dl>
+          </div>
+
+          <div className="doc-voucher">
+            <div className="doc-voucher__head">
+              <span>Tally · Purchase voucher</span>
+              <span className="doc-voucher__badge">STAGED</span>
+            </div>
+            <dl className="doc-voucher__rows">
+              <dt>Purchase A/c</dt>
+              <dd>4,18,600.00</dd>
+              <dt>Shree Metals Pvt Ltd</dt>
+              <dd>Cr 4,18,600.00</dd>
+              <dt>PO match</dt>
+              <dd className="is-match">4471 ✓</dd>
+            </dl>
+            <div className="doc-voucher__foot">Waiting on one approval click.</div>
+          </div>
+        </div>
       </div>
+
+      <dl className="hero__facts">
+        {facts.map((fact) => (
+          <div key={fact.label}>
+            <dt>{fact.label}</dt>
+            <dd>{fact.value}</dd>
+          </div>
+        ))}
+      </dl>
     </section>
   );
 }

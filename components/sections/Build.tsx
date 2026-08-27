@@ -1,147 +1,92 @@
-import type { ReactNode } from "react";
-import { BookCallButton } from "@/components/BookCallButton";
-import { reassurance } from "@/lib/siteConfig";
+import Image from "next/image";
 
-const iconProps = {
-  viewBox: "0 0 24 24",
-  width: 40,
-  height: 40,
-  fill: "none",
-  stroke: "#0d6a70",
-  strokeWidth: 1.6,
-  strokeLinecap: "round" as const,
-  strokeLinejoin: "round" as const,
-  "aria-hidden": true,
-};
-
-const capabilities: {
-  icon: ReactNode;
-  title: string;
-  body: string;
-  stat: string;
-  delay: number;
-}[] = [
+const items = [
   {
-    icon: (
-      <svg {...iconProps}>
-        <path d="M12 3v9" />
-        <path d="M8.4 8.4 12 12l3.6-3.6" />
-        <path d="M4 14.5v5h16v-5" />
-      </svg>
-    ),
-    title: "Vendor invoices enter Tally without anyone typing.",
-    body: "Invoices arriving by email or WhatsApp are read, matched against the purchase order, and posted as vouchers for one approval click.",
-    stat: "Roughly 3 hours a day back",
-    delay: 0,
+    title: "Vendor invoices post into Tally without anyone typing.",
+    body: "Read from email or WhatsApp, matched to the PO, staged as vouchers for one approval click. Nothing posts unseen.",
+    metric: "~3 hrs",
+    unit: "a day back",
+    dayOne: "Yesterday's invoice mails are already staged as vouchers when you log in.",
   },
   {
-    icon: (
-      <svg {...iconProps}>
-        <path d="M20.5 12.4 12.4 20.5l-9-9V3.4h8.1z" />
-        <circle cx="8" cy="8" r="1.6" />
-      </svg>
-    ),
     title: "A quotation goes out in four minutes, not forty.",
-    body: "Sales picks the customer and the items. Pricing, discount slab and terms come from your own list, and a manager approves before it sends.",
-    stat: "Roughly 5 hours a week back",
-    delay: 60,
+    body: "Pricing, discount slab and terms pull from your own list. The manager approves before it sends.",
+    metric: "~5 hrs",
+    unit: "a week back",
+    dayOne: "Your live price list and discount slabs are loaded and quoting.",
   },
   {
-    icon: (
-      <svg {...iconProps}>
-        <path d="M3.5 4.6h17v10.2h-11l-6 4.6z" />
-        <circle cx="8.6" cy="9.7" r=".9" />
-        <circle cx="12" cy="9.7" r=".9" />
-        <circle cx="15.4" cy="9.7" r=".9" />
-      </svg>
-    ),
-    title: "Every WhatsApp enquiry is answered in under a minute.",
-    body: "Product, quantity and city are captured on the spot at any hour, then passed to the right salesperson. Anything priced waits for a person.",
-    stat: "Nights and weekends covered",
-    delay: 120,
+    title: "Every WhatsApp enquiry answered in under a minute, at any hour.",
+    body: "Product, quantity and city captured, then routed to the right salesperson. Anything priced waits for a human.",
+    metric: "13 hrs",
+    unit: "of silence closed",
+    dayOne: "An 11:40pm enquiry gets an answer, and a salesperson gets the lead.",
   },
   {
-    icon: (
-      <svg {...iconProps}>
-        <rect x="3.5" y="5.2" width="17" height="15.3" rx="1.2" />
-        <path d="M8 3v4M16 3v4M3.5 10h17" />
-        <path d="m9 14.6 2.4 2.4 4-4.4" />
-      </svg>
-    ),
-    title: "Tenders in your categories arrive in one morning email.",
-    body: "The portals are checked for you. Closing dates, eligibility and document fees are pulled out, with anything due inside a week at the top.",
-    stat: "Roughly 4 hours a week of portal checking",
-    delay: 0,
+    title: "Tender closing dates arrive in one morning email.",
+    body: "Portals checked automatically. Closing dates, eligibility and fees extracted and listed.",
+    metric: "~4 hrs",
+    unit: "a week back",
+    dayOne: "Tomorrow's 8am email lists every open tender and its closing date.",
   },
   {
-    icon: (
-      <svg {...iconProps}>
-        <path d="M3.6 20.4h16.8" />
-        <rect x="5.6" y="12.4" width="3.6" height="8" />
-        <rect x="11.2" y="7.6" width="3.6" height="12.8" />
-        <rect x="16.8" y="4" width="3.6" height="16.4" />
-      </svg>
-    ),
-    title: "Monday's MIS report is in your inbox at 7am.",
-    body: "Built from the same sources every week, in the format your reviewers already read, with the numbers that moved marked.",
-    stat: "Half a day a week back",
-    delay: 60,
+    title: "Monday's MIS is in your inbox at 7am.",
+    body: "Same format your reviewers already read, with the numbers that moved marked.",
+    metric: "½ day",
+    unit: "a week back",
+    dayOne: "Your existing MIS template, matched line for line.",
   },
   {
-    icon: (
-      <svg {...iconProps}>
-        <path d="M6 3.5h7.4L18 8.1v12.4H6z" />
-        <circle cx="11.8" cy="13" r="3" />
-        <path d="m14 15.2 2.6 2.6" />
-      </svg>
-    ),
-    title: "Ask about a contract, get the clause and the page.",
-    body: "Contracts, specs and policies become searchable in plain language, and every answer comes back with the source quoted.",
-    stat: "Minutes instead of a hunt through the drive",
-    delay: 120,
+    title: "Ask your contracts a question in plain language.",
+    body: "Contracts, specs and policies made searchable. Every answer returns the clause and the page.",
+    metric: "0 min",
+    unit: "hunting folders",
+    dayOne: "Last year's contracts and specs are indexed and answering.",
   },
 ];
 
 export function Build() {
   return (
-    <section id="build" className="section section--ruled">
-      <div className="shell">
-        <div className="build__head" data-reveal="0">
-          <div>
-            <p className="eyebrow">02 · What we build</p>
-            <h2 className="h2">Six jobs we are asked to take off people.</h2>
-          </div>
-          <p className="lede">
-            Each one is built around the systems you already run &mdash; Tally,
-            Zoho, Excel, WhatsApp &mdash; and handed over to your team, not kept
-            in ours.
+    <section className="shell section build">
+      <div className="head-split">
+        <div className="head-split__text">
+          <p className="eyebrow" data-reveal>
+            <span>02</span>
+            <span>What we build</span>
           </p>
+          <h2 className="h2" data-reveal>
+            Six things we get asked for most.
+          </h2>
         </div>
+        <figure className="figure head-split__figure build__head-figure" data-reveal>
+          <Image
+            src="/images/bundle-vs-sheet.jpg"
+            alt="A thick bundle of paper tied with a band beside one single folded sheet on a cream surface"
+            width={1600}
+            height={1066}
+            sizes="(max-width: 640px) 100vw, 320px"
+          />
+        </figure>
+      </div>
 
-        <div className="cards">
-          {capabilities.map((item) => (
-            <div className="card" key={item.title} data-reveal={item.delay}>
-              {item.icon}
-              <h3 className="card__title">{item.title}</h3>
-              <p className="card__body">{item.body}</p>
-              <p className="card__stat">{item.stat}</p>
+      <div className="build__grid">
+        {items.map((item) => (
+          <article className="build__card" key={item.title} data-reveal>
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+            <div className="build__foot">
+              <div className="build__metric">
+                <strong>{item.metric}</strong>
+                <span className="label-sm">{item.unit}</span>
+              </div>
+              <p className="build__dayone">
+                <span className="label-sm">Day one</span>
+                <br />
+                {item.dayOne}
+              </p>
             </div>
-          ))}
-        </div>
-
-        <p className="build__aside" data-reveal="0">
-          These are the six we are asked for most. The same approach applies to
-          any other system you run &mdash; an ERP, custom software written years
-          ago, or a legacy database nobody has touched since.
-        </p>
-
-        <div
-          className="section__foot section__foot--tight btn-stack"
-          data-reveal="0"
-        >
-          <BookCallButton variant="section" />
-          <p className="note">{reassurance}</p>
-        </div>
+          </article>
+        ))}
       </div>
     </section>
   );
