@@ -36,6 +36,10 @@ export default async function SolutionPage({
   const solution = getSolution((await params).slug);
   if (!solution) notFound();
 
+  const index = solutions.indexOf(solution);
+  const prev = solutions[(index + solutions.length - 1) % solutions.length];
+  const next = solutions[(index + 1) % solutions.length];
+
   return (
     <>
       <Reveal />
@@ -44,7 +48,23 @@ export default async function SolutionPage({
         <section className="hero sol-hero">
           <div className="wrap sol-hero__grid">
             <div>
-              <Eyebrow>Solution · {solution.no}</Eyebrow>
+              <div className="sol-hero__top">
+                <Eyebrow>Solution · {solution.no}</Eyebrow>
+                <div className="sol-arrows">
+                  <Link
+                    href={`/solutions/${prev.slug}`}
+                    aria-label={`Previous solution: ${prev.title[0]} ${prev.title[1]}`}
+                  >
+                    ←
+                  </Link>
+                  <Link
+                    href={`/solutions/${next.slug}`}
+                    aria-label={`Next solution: ${next.title[0]} ${next.title[1]}`}
+                  >
+                    →
+                  </Link>
+                </div>
+              </div>
               <h1>
                 <span className="line">{solution.title[0]}</span>
                 <span className="line line--sage">{solution.title[1]}</span>
@@ -110,6 +130,21 @@ export default async function SolutionPage({
             </ul>
           </div>
         </section>
+
+        <nav className="wrap sol-pager" aria-label="More solutions" data-reveal>
+          <Link className="sol-pager__link" href={`/solutions/${prev.slug}`}>
+            <span className="sol-pager__k">← Previous solution · {prev.no}</span>
+            <span className="sol-pager__t">
+              {prev.title[0]} {prev.title[1].replace(/\.$/, "")}
+            </span>
+          </Link>
+          <Link className="sol-pager__link sol-pager__link--next" href={`/solutions/${next.slug}`}>
+            <span className="sol-pager__k">Next solution · {next.no} →</span>
+            <span className="sol-pager__t">
+              {next.title[0]} {next.title[1].replace(/\.$/, "")}
+            </span>
+          </Link>
+        </nav>
 
         <section className="section section--band">
           <div className="wrap sol-cta" data-reveal>
