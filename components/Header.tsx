@@ -7,7 +7,6 @@ const links = [
   { href: "/#calculator", label: "ROI calculator" },
   { href: "/#proof", label: "Case studies" },
   { href: "/#about", label: "About" },
-  { href: "tel:+919876543210", label: "Call us ↗" },
 ];
 
 export function Header() {
