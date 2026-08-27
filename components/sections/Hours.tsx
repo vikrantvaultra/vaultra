@@ -84,8 +84,8 @@ export function Hours() {
         <Folio
           n="01"
           label="The cost of doing nothing"
-          direction="उत्तर · N"
-          quality="Kubera · wealth"
+          direction="N"
+          quality="wealth"
         />
         <h2 data-reveal>You already know which work this is.</h2>
         <p className="lede" data-reveal>
@@ -103,7 +103,7 @@ export function Hours() {
 
         <div className="calc" data-reveal>
           <div className="calc__in">
-            <p className="calc__title">Do the arithmetic on your own week — tick what applies</p>
+            <p className="calc__title">Do the arithmetic on your own week · tick what applies</p>
 
             {TASKS.map((task, i) => (
               <div className="task" key={task.label}>
@@ -116,7 +116,7 @@ export function Hours() {
                   <button
                     type="button"
                     onClick={() => step(i, -1)}
-                    aria-label={`Fewer people — ${task.label}`}
+                    aria-label={`Fewer people, ${task.label}`}
                   >
                     −
                   </button>
@@ -124,7 +124,7 @@ export function Hours() {
                   <button
                     type="button"
                     onClick={() => step(i, 1)}
-                    aria-label={`More people — ${task.label}`}
+                    aria-label={`More people, ${task.label}`}
                   >
                     +
                   </button>
@@ -160,13 +160,13 @@ export function Hours() {
             </div>
             <div>
               <span className="calc__k">Annualised salary cost</span>
-              <div className="big-num">{counted ? inr(annual) : "—"}</div>
+              <div className="big-num">{counted ? inr(annual) : "₹0"}</div>
             </div>
             <p className="payback">
               {counted ? (
                 <>
                   At this rate, a {inr(siteConfig.assumedBuildCost)} build pays for itself in
-                  about <b>{months === 1 ? "1 month" : `${months} months`}</b> — then keeps
+                  about <b>{months === 1 ? "1 month" : `${months} months`}</b>, and then keeps
                   saving, year after year.
                 </>
               ) : (
@@ -175,7 +175,7 @@ export function Hours() {
             </p>
             <Cta block>
               {counted
-                ? `Recover ${inr(annual)} a year — book my free call`
+                ? `Recover ${inr(annual)} a year. Book my free call`
                 : "Book my free 20-minute call"}
             </Cta>
           </div>

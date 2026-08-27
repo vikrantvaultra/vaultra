@@ -9,7 +9,7 @@ export const siteConfig = {
   city: "Mumbai",
   tagline: "Automation consultancy · Mumbai",
   description:
-    "We find the repetitive work eating your staff's hours — invoice entry, quotations, weekly reports, after-hours enquiries — and replace it with software. Two to four weeks, at a fixed price agreed before anyone starts.",
+    "We find the repetitive work eating your staff's hours: invoice entry, quotations, weekly reports, after-hours enquiries. Then we replace it with software. Two to four weeks, at a fixed price agreed before anyone starts.",
   url: process.env.NEXT_PUBLIC_SITE_URL || "https://vaultra.in",
 
   /**

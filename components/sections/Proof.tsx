@@ -35,7 +35,7 @@ export function Proof() {
   return (
     <section className="section" id="proof">
       <div className="wrap">
-        <Folio n="03" label="Proof" direction="नैऋत्य · SW" quality="stability" />
+        <Folio n="03" label="Proof" direction="SW" quality="stability" />
         <h2 data-reveal>Work we have already shipped.</h2>
 
         <div className="proof__grid">

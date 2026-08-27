@@ -21,16 +21,19 @@ The palette is placed rather than chosen, and the section order follows it:
 | Token | Colour | Stands for | Where it is allowed |
 | --- | --- | --- | --- |
 | `--base` / `--sheet` | ivory | the uncluttered ground | page and card backgrounds |
-| `--ink` | deep green | Budh · commerce | all body text and headings |
+| `--ink` | deep green | commerce | all body text and headings |
 | `--gold` | brass | wealth | the margin rule, folio numbers, the guarantee |
-| `--fire` | saffron | Agni · action | **booking only** — nothing else is ever this colour |
+| `--fire` | saffron | action | **booking only**; nothing else is ever this colour |
 | `--leaf` | growth green | hours recovered | the credit side, stamps, ticks |
 
-Each section carries a folio number and the direction it sits in — north for
-Kubera and wealth (`01 · the cost`), east for growth (`02 · what we build`),
-south-west for stability (`03 · proof`), west for gains (`04 · how it works`),
-north-east for clarity (`00 · hero`, `05 · answers`), south-east for Agni and
-action (`06 · book the call`).
+Each section carries a folio number and the direction it sits in: north for
+wealth (`01 · the cost`), east for growth (`02 · what we build`), south-west
+for stability (`03 · proof`), west for gains (`04 · how it works`), north-east
+for clarity (`00 · hero`, `05 · answers`), south-east for action (`06 · book
+the call`).
+
+The chips read in English only. The Devanagari that named each direction in
+the source design is not on the page.
 
 A single gold rule runs the full height of the page at the left margin, the way
 a ledger's margin line does. It is `body::before`, fixed, and never scrolls.

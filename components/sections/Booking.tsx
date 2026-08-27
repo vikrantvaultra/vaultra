@@ -46,7 +46,7 @@ const REQUIRED = {
   name: "Please tell us your name.",
   company: "Please tell us your company.",
   phone: "We need a number to call you back on.",
-  work: "One line is enough — what does your team do by hand?",
+  work: "One line is enough. What does your team do by hand?",
 } as const;
 
 type FieldName = keyof typeof REQUIRED;
@@ -113,7 +113,7 @@ export function Booking() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: siteConfig.web3formsKey,
-          subject: `Call booked — ${data.get("name") || "no name"}${
+          subject: `Call booked: ${data.get("name") || "no name"}${
             whenLabel ? ` · ${whenLabel}` : ""
           }`,
           from_name: "Vaultra website",
@@ -121,9 +121,9 @@ export function Booking() {
           company: data.get("company"),
           "whatsapp number": phone,
           "repetitive work": data.get("work"),
-          budget: data.get("budget") || "—",
+          budget: data.get("budget") || "Not given",
           "requested slot": whenLabel || "No slot picked",
-          "requested date": chosenDay?.iso || "—",
+          "requested date": chosenDay?.iso || "Not given",
           source: "Booking section",
         }),
       });
@@ -151,7 +151,7 @@ export function Booking() {
   return (
     <section className="section book" id="book">
       <div className="wrap">
-        <Folio n="06" label="Book the call" direction="आग्नेय · SE" quality="Agni · action" />
+        <Folio n="06" label="Book the call" direction="SE" quality="action" />
 
         {sent ? (
           <div className="received">
@@ -252,7 +252,7 @@ export function Booking() {
                   id="fWork"
                   name="work"
                   onInput={() => clear("work")}
-                  placeholder="One line is enough — e.g. “two people type vendor invoices into Tally all morning”"
+                  placeholder="One line is enough. For example: two people type vendor invoices into Tally all morning"
                 />
                 {invalid.includes("work") ? <p className="field__err">{REQUIRED.work}</p> : null}
               </div>
@@ -308,7 +308,7 @@ export function Booking() {
                     value={slot}
                     onChange={(event) => setSlot(event.target.value)}
                   >
-                    <option value="">No preference — call me any time</option>
+                    <option value="">No preference, call me any time</option>
                     {SLOTS.map((s) => (
                       <option key={s} value={s}>
                         {s}
@@ -349,8 +349,8 @@ export function Booking() {
                 {reassurance}
               </p>
               <p className="form__alt">
-                Would rather type than talk? <a href={whatsappHref}>Message us on WhatsApp</a> —
-                the same people answer.
+                Would rather type than talk? <a href={whatsappHref}>Message us on WhatsApp</a>.
+                The same people answer.
               </p>
             </form>
           </div>

@@ -7,16 +7,16 @@ export function Hero() {
   return (
     <section className="hero" id="top">
       <div className="wrap">
-        <Folio n="00" label={siteConfig.tagline} direction="ईशान्य · NE" quality="clarity" />
+        <Folio n="00" label={siteConfig.tagline} direction="NE" quality="clarity" />
 
         <div className="hero__grid">
           <div>
             <h1>Your team is still typing invoices by hand.</h1>
             <p className="lede">
-              We find the repetitive work eating your staff&apos;s hours — invoice entry,
-              quotations, weekly reports, after-hours enquiries — and replace it with software
-              built around whatever you already run. Two to four weeks. One fixed price, agreed
-              in writing before anyone starts.
+              We find the repetitive work eating your staff&apos;s hours: invoice entry,
+              quotations, weekly reports, after-hours enquiries. Then we replace it with
+              software built around whatever you already run. Two to four weeks. One fixed
+              price, agreed in writing before anyone starts.
             </p>
 
             <div className="anchor" data-reveal>
@@ -42,7 +42,7 @@ export function Hero() {
               <Stamp>NDA first</Stamp>
               <Stamp>Fixed price</Stamp>
               <Stamp>No lock-in</Stamp>
-              <p>Works with Tally, Zoho, SAP, Excel, WhatsApp — or whatever you run.</p>
+              <p>Works with Tally, Zoho, SAP, Excel, WhatsApp, or whatever you run.</p>
             </div>
           </div>
 
@@ -71,7 +71,7 @@ export function Hero() {
                 <span className="v-row__r">₹ 4,18,600.00</span>
               </div>
               <div className="v-sep">
-                <span>— staged in Tally as purchase voucher —</span>
+                <span>staged in Tally as purchase voucher</span>
               </div>
               <div className="v-row">
                 <span className="v-row__l">Purchase A/c</span>

@@ -1,6 +1,6 @@
 /**
  * The head of every section: a folio number, what the page is about, and the
- * vastu direction the section is placed in — north for wealth, east for
+ * vastu direction the section is placed in. North for wealth, east for
  * growth, south-east for action.
  */
 export function Folio({
@@ -19,7 +19,7 @@ export function Folio({
       <span className="folio">FOLIO {n}</span>
       <span>{label}</span>
       <span className="dir">
-        {direction} — <b>{quality}</b>
+        {direction} · <b>{quality}</b>
       </span>
     </p>
   );

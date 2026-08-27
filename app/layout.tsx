@@ -35,7 +35,7 @@ const ogImage = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: "Vaultra — Automation for mid-market operations, Mumbai",
+    default: "Vaultra · Automation for mid-market operations, Mumbai",
     template: "%s · Vaultra",
   },
   description: siteConfig.description,

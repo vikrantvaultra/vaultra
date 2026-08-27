@@ -7,15 +7,15 @@ import { Plate } from "@/components/Plate";
 const faqs = [
   {
     q: "What does it cost?",
-    a: "One fixed price for the whole build, quoted in writing within two working days of the call. One process in one system sits at the low end; several processes, or a system with no clean way in, costs more. Most first builds are a single workflow, not a platform. Payment is split, with the balance due on delivery of what the scope says — and the number only changes if you change the scope.",
+    a: "One fixed price for the whole build, quoted in writing within two working days of the call. One process in one system sits at the low end; several processes, or a system with no clean way in, costs more. Most first builds are a single workflow, not a platform. Payment is split, with the balance due on delivery of what the scope says. The number only changes if you change the scope.",
   },
   {
     q: "Is our data safe?",
     a: "The software runs on your accounts and your infrastructure. Credentials stay with you. We sign an NDA before the first file moves, take the least access the job needs, and access ends when the build ends unless you keep us on support. Your documents are not used to train anything.",
   },
   {
-    q: "Our systems aren't Tally or Zoho — can you still help?",
-    a: "Yes. We start from the workflow, not the software. Tally, Zoho, SAP B1, Busy, a custom ERP, a legacy database, or a screen someone types into by hand — if the data can be read and written, we can work with it. On the call we tell you which of your systems are straightforward and which need a workaround.",
+    q: "Our systems aren't Tally or Zoho. Can you still help?",
+    a: "Yes. We start from the workflow, not the software. Tally, Zoho, SAP B1, Busy, a custom ERP, a legacy database, or a screen someone types into by hand. If the data can be read and written, we can work with it. On the call we tell you which of your systems are straightforward and which need a workaround.",
   },
   {
     q: "Do we have to change the software we use?",
@@ -23,7 +23,7 @@ const faqs = [
   },
   {
     q: "What if it breaks?",
-    a: "You call us, not a ticket queue. Anything that fails stops and tells a named person, and the manual route still works — no silent errors, no half-posted vouchers. Failures are fixed the same working day. Fixes to the delivered scope are ours; monthly support covers changes after that.",
+    a: "You call us, not a ticket queue. Anything that fails stops and tells a named person, and the manual route still works. No silent errors, no half-posted vouchers. Failures are fixed the same working day. Fixes to the delivered scope are ours; monthly support covers changes after that.",
   },
   {
     q: "What if it doesn't work for us?",
@@ -38,7 +38,7 @@ export function Answers() {
   return (
     <section className="section" id="answers">
       <div className="wrap">
-        <Folio n="05" label="Straight answers" direction="ईशान्य · NE" quality="clarity" />
+        <Folio n="05" label="Straight answers" direction="NE" quality="clarity" />
         <h2 data-reveal>The questions everyone asks on the call.</h2>
 
         <div className="faq" data-reveal>

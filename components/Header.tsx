@@ -14,7 +14,7 @@ export function Header() {
   return (
     <header className="header">
       <div className="wrap header__inner">
-        <a className="brand" href="#top" aria-label={`${siteConfig.name} — home`}>
+        <a className="brand" href="#top" aria-label={`${siteConfig.name} home`}>
           <Logo />
           {siteConfig.name}
         </a>

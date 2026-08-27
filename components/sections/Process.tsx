@@ -6,7 +6,7 @@ const steps = [
   {
     n: "Step 01",
     title: "A 20-minute call",
-    body: "You describe the work that repeats. We walk it end to end — what starts it, who touches it, where it stalls — and say whether software should do it.",
+    body: "You describe the work that repeats. We walk it end to end: what starts it, who touches it, where it stalls. Then we say whether software should do it.",
     how: "20 minutes",
     cost: "Free, no follow-up sequence",
   },
@@ -20,7 +20,7 @@ const steps = [
   {
     n: "Step 03",
     title: "Support, if you want it",
-    body: "Code, credentials and documentation go to your team either way. Hosting, monitoring and changes are optional — plenty of clients take the build and run it themselves.",
+    body: "Code, credentials and documentation go to your team either way. Hosting, monitoring and changes are optional. Plenty of clients take the build and run it themselves.",
     how: "Monthly, ongoing",
     cost: "Flat retainer. Cancel any month",
   },
@@ -29,14 +29,14 @@ const steps = [
 const promises = [
   { stamp: "Senior team", text: "You work with the people who build it." },
   { stamp: "Human approves", text: "A person releases anything touching money." },
-  { stamp: "No lock-in", text: "The work stays yours — code and credentials handed over." },
+  { stamp: "No lock-in", text: "The work stays yours. Code and credentials handed over." },
 ];
 
 export function Process() {
   return (
     <section className="section" id="process">
       <div className="wrap">
-        <Folio n="04" label="How it works" direction="पश्चिम · W" quality="gains" />
+        <Folio n="04" label="How it works" direction="W" quality="gains" />
         <h2 data-reveal>One number, in writing, within two working days.</h2>
         <p className="lede" data-reveal>
           We scope by workflow, not by software. No discovery retainer, no workshop phase.
@@ -78,7 +78,7 @@ export function Process() {
             </h3>
             <p>
               There is a review at the halfway mark. If it is going the wrong way, you see it
-              then — not at the end.
+              then, not at the end.
             </p>
             <div className="guarantee__mark">
               <Stamp tone="gold">In writing</Stamp>

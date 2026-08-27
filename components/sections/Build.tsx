@@ -52,13 +52,13 @@ export function Build() {
   return (
     <section className="section" id="build">
       <div className="wrap">
-        <Folio n="02" label="What we build" direction="पूर्व · E" quality="growth" />
+        <Folio n="02" label="What we build" direction="E" quality="growth" />
 
         <div className="build__head">
           <div>
             <h2 data-reveal>Six jobs we are asked to take off people.</h2>
             <p className="lede" data-reveal>
-              Each one is built around the systems you already run — and handed over to your
+              Each one is built around the systems you already run, and handed over to your
               team, not kept in ours. Hours saved are entered on the credit side, where they
               belong.
             </p>
@@ -101,9 +101,9 @@ export function Build() {
         </div>
 
         <p className="build__note">
-          These are the six we are asked for most. The same approach applies to any other system
-          you run — an ERP, custom software written years ago, or a legacy database nobody has
-          touched since.
+          These are the six we are asked for most. The same approach applies to any other
+          system you run: an ERP, custom software written years ago, or a legacy database
+          nobody has touched since.
         </p>
 
         <div className="cta-band" data-reveal>
