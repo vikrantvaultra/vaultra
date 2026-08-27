@@ -1066,18 +1066,25 @@ h3 {
 
 /* -------------------------------------------------------- testimonials */
 
+.proof__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+
 .proof__grid {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
-  gap: clamp(32px, 5vw, 88px);
-  align-items: center;
+  gap: 14px;
+  align-items: stretch;
 }
 
 .stars {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-top: 30px;
   font-family: var(--font-mono-stack);
   font-size: 11px;
   letter-spacing: 0.05em;
@@ -1091,34 +1098,58 @@ h3 {
   letter-spacing: 2px;
 }
 
-.tquote {
-  margin-top: 26px;
+.tcard {
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  padding: clamp(26px, 3.2vw, 44px);
 }
 
-.tquote blockquote p {
-  font-size: clamp(20px, 2.1vw, 27px);
+.tcard__mark {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--sage);
+}
+
+.tcard blockquote p {
+  margin-top: 14px;
+  font-size: clamp(19px, 2vw, 26px);
   line-height: 1.4;
   letter-spacing: -0.02em;
   color: var(--ink);
   font-weight: 500;
-  max-width: 26ch;
+  max-width: 30ch;
+  min-height: 4.2em;
 }
 
-.tquote__by {
+.tcard__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+}
+
+.tcard__by {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-top: 28px;
 }
 
-.tquote__by b {
+.tcard__by b {
   display: block;
   font-size: 14.5px;
   font-weight: 600;
   color: var(--ink);
 }
 
-.tquote__role {
+.tcard__role {
   font-family: var(--font-mono-stack);
   font-size: 10.5px;
   letter-spacing: 0.04em;
@@ -1126,19 +1157,42 @@ h3 {
   color: var(--ink-soft);
 }
 
-.tquote__role i {
+.tcard__role i {
   font-style: normal;
   color: var(--mint-deep);
 }
 
+.tctrl {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.tctrl > button {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline);
+  color: var(--ink);
+  font-size: 14px;
+  transition: border-color 0.18s ease, background 0.18s ease;
+}
+
+.tctrl > button:hover {
+  border-color: var(--mint-deep);
+  background: var(--band);
+}
+
 .tdots {
   display: flex;
-  gap: 8px;
-  margin-top: 32px;
+  align-items: center;
+  gap: 7px;
 }
 
 .tdots button {
-  width: 18px;
+  width: 16px;
   height: 3px;
   border-radius: 2px;
   background: rgba(13, 59, 46, 0.22);
@@ -1146,24 +1200,19 @@ h3 {
 }
 
 .tdots button.is-active {
-  width: 38px;
+  width: 32px;
   background: var(--ink);
 }
 
 .proof__stat {
-  position: relative;
-  background: var(--ink);
-  border-radius: 3px;
-  padding: clamp(30px, 3.4vw, 52px);
-  min-height: 330px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  background: var(--ink);
+  border-radius: 3px;
+  padding: clamp(26px, 3.2vw, 44px);
 }
 
 .proof__mark {
-  position: absolute;
-  top: clamp(22px, 2.6vw, 40px);
   font-size: 44px;
   font-weight: 700;
   line-height: 1;
@@ -1171,6 +1220,7 @@ h3 {
 }
 
 .proof__n {
+  margin-top: 14px;
   font-size: clamp(44px, 4.6vw, 64px);
   font-weight: 700;
   letter-spacing: -0.05em;
@@ -1179,16 +1229,20 @@ h3 {
 }
 
 .proof__stat p {
-  margin-top: 16px;
+  margin-top: 14px;
   max-width: 26ch;
   font-size: 15px;
 }
 
-.proof__hr {
-  display: block;
-  height: 1px;
-  background: var(--hairline-dark);
-  margin-top: 26px;
+.proof__statfoot {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid var(--hairline-dark);
+  font-family: var(--font-mono-stack);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sage-soft);
 }
 
 /* ----------------------------------------------------------- trust strip */
@@ -1701,6 +1755,16 @@ h3 {
   .roi__grid,
   .proof__grid {
     grid-template-columns: 1fr;
+  }
+
+  .proof__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .tcard blockquote p {
+    min-height: 0;
   }
 
   .sol-hero__grid,
