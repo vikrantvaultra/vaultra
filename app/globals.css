@@ -943,6 +943,27 @@ h3 {
   box-shadow: 0 0 0 1px var(--mint);
 }
 
+.slider__bounds {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-family: var(--font-mono-stack);
+  font-size: 9.5px;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.roi__basis {
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--hairline-dark);
+  font-family: var(--font-mono-stack);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sage-soft);
+}
+
 .roi__out {
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--hairline-dark);
@@ -989,24 +1010,34 @@ h3 {
 .bars {
   display: flex;
   align-items: flex-end;
-  gap: 6px;
-  height: 88px;
-  margin-top: 34px;
+  gap: 5px;
+  height: 76px;
+  margin-top: 30px;
 }
 
 .bars span {
   flex: 1;
   border-radius: 2px 2px 0 0;
   background: linear-gradient(to top, #0d8f63, var(--mint));
+  min-height: 4px;
+}
+
+.bars__caption {
+  margin-top: 10px;
+  font-family: var(--font-mono-stack);
+  font-size: 9.5px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .roi__foot {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  gap: 10px 16px;
   flex-wrap: wrap;
-  margin-top: 26px;
-  padding-top: 20px;
+  margin-top: 22px;
+  padding-top: 18px;
   border-top: 1px solid var(--hairline-dark);
   font-family: var(--font-mono-stack);
   font-size: 11px;
@@ -1017,6 +1048,20 @@ h3 {
 .roi__foot b {
   color: var(--mint);
   font-weight: 500;
+}
+
+.roi__out .btn {
+  margin-top: 24px;
+}
+
+.roi__note {
+  margin-top: 14px;
+  text-align: center;
+  font-family: var(--font-mono-stack);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--sage-soft);
 }
 
 /* -------------------------------------------------------- testimonials */

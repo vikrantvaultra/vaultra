@@ -1,16 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { AuditTrigger } from "@/components/AuditModal";
 import { Eyebrow } from "@/components/Eyebrow";
 
-/** ~9.5 hours returned per person per month, per the reference's own maths. */
+/** ~9.5 hours returned per person per month — the same maths as the cards. */
 const HOURS_PER_PERSON = 9.5;
 
-/** Static silhouette behind the number, as in the reference. */
-const BARS = [34, 52, 44, 72, 58, 54, 88];
+const MONTHS = 12;
 
-function usd(n: number) {
-  return "$" + Math.round(n).toLocaleString("en-US");
+/** Rupees at the scale an Indian reader expects: thousands, lakh, crore. */
+function inr(n: number) {
+  if (n >= 1e7) return "₹" + (n / 1e7).toFixed(n < 5e7 ? 1 : 0).replace(/\.0$/, "") + " crore";
+  if (n >= 1e5) return "₹" + (n / 1e5).toFixed(n < 1e6 ? 1 : 0).replace(/\.0$/, "") + " lakh";
+  return "₹" + Math.round(n).toLocaleString("en-IN");
 }
 
 function Slider({
@@ -18,16 +21,22 @@ function Slider({
   label,
   min,
   max,
+  step,
   value,
   display,
+  minLabel,
+  maxLabel,
   onChange,
 }: {
   id: string;
   label: string;
   min: number;
   max: number;
+  step: number;
   value: number;
   display: string;
+  minLabel: string;
+  maxLabel: string;
   onChange: (v: number) => void;
 }) {
   const pct = ((value - min) / (max - min)) * 100;
@@ -42,19 +51,24 @@ function Slider({
         type="range"
         min={min}
         max={max}
+        step={step}
         value={value}
         onChange={(event) => onChange(parseInt(event.target.value, 10))}
         style={{
           background: `linear-gradient(to right, var(--mint) ${pct}%, rgba(255,255,255,0.18) ${pct}%)`,
         }}
       />
+      <div className="slider__bounds" aria-hidden="true">
+        <span>{minLabel}</span>
+        <span>{maxLabel}</span>
+      </div>
     </div>
   );
 }
 
 export function Roi() {
   const [team, setTeam] = useState(24);
-  const [rate, setRate] = useState(22);
+  const [rate, setRate] = useState(350);
 
   const hours = Math.round(team * HOURS_PER_PERSON);
   const monthly = hours * rate;
@@ -79,42 +93,68 @@ export function Roi() {
               label="Team size"
               min={1}
               max={100}
+              step={1}
               value={team}
-              display={`${team} people`}
+              display={`${team} ${team === 1 ? "person" : "people"}`}
+              minLabel="1"
+              maxLabel="100 people"
               onChange={setTeam}
             />
             <Slider
               id="rate"
-              label="Average hourly rate"
-              min={10}
-              max={100}
+              label="Average cost per hour"
+              min={100}
+              max={1000}
+              step={25}
               value={rate}
-              display={`$${rate}/hr`}
+              display={`₹${rate}/hr`}
+              minLabel="₹100"
+              maxLabel="₹1,000"
               onChange={setRate}
             />
+            <p className="roi__basis">
+              Assumes ~{HOURS_PER_PERSON} hours of repetitive work automated per person, per
+              month
+            </p>
           </div>
         </div>
 
-        <div className="roi__out" data-reveal aria-live="polite">
-          <p className="roi__k">
-            <span className="live-dot" aria-hidden="true" />
-            Estimated monthly impact
+        <div className="roi__out" data-reveal>
+          <div aria-live="polite">
+            <p className="roi__k">
+              <span className="live-dot" aria-hidden="true" />
+              Estimated monthly impact
+            </p>
+            <div className="big-num">{inr(monthly)}</div>
+            <p className="roi__sub">potential savings per month</p>
+
+            <div
+              className="bars"
+              role="img"
+              aria-label={`Cumulative savings grow to ${inr(monthly * MONTHS)} over twelve months`}
+            >
+              {Array.from({ length: MONTHS }, (_, i) => (
+                <span key={i} style={{ height: `${((i + 1) / MONTHS) * 100}%` }} />
+              ))}
+            </div>
+            <p className="bars__caption" aria-hidden="true">
+              Cumulative savings, month 1 → 12
+            </p>
+
+            <div className="roi__foot">
+              <span>
+                {hours.toLocaleString("en-IN")} hours returned <b>every month</b>
+              </span>
+              <span>
+                12-month upside <b>{inr(monthly * MONTHS)}</b>
+              </span>
+            </div>
+          </div>
+
+          <AuditTrigger label="Get my exact number" block />
+          <p className="roi__note">
+            Directional estimate · one number in writing after the audit
           </p>
-          <div className="big-num">{usd(monthly)}</div>
-          <p className="roi__sub">potential savings per month</p>
-
-          <div className="bars" aria-hidden="true">
-            {BARS.map((h, i) => (
-              <span key={i} style={{ height: `${h}%` }} />
-            ))}
-          </div>
-
-          <div className="roi__foot">
-            <span>{hours.toLocaleString("en-US")} hours returned</span>
-            <span>
-              12-month upside <b>{usd(monthly * 12)}</b>
-            </span>
-          </div>
         </div>
       </div>
     </section>
