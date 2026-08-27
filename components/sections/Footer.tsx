@@ -7,7 +7,7 @@ export function Footer() {
       <div className="wrap">
         <div className="footer__grid">
           <div>
-            <a className="brand" href="#top">
+            <a className="brand" href="/#top">
               <Logo size={26} />
               vaultra
             </a>

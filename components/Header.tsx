@@ -3,10 +3,10 @@ import { Logo } from "@/components/Logo";
 import { MobileMenu } from "@/components/MobileMenu";
 
 const links = [
-  { href: "#solutions", label: "Solutions" },
-  { href: "#calculator", label: "ROI calculator" },
-  { href: "#proof", label: "Case studies" },
-  { href: "#about", label: "About" },
+  { href: "/#solutions", label: "Solutions" },
+  { href: "/#calculator", label: "ROI calculator" },
+  { href: "/#proof", label: "Case studies" },
+  { href: "/#about", label: "About" },
   { href: "tel:+919876543210", label: "Call us ↗" },
 ];
 
@@ -14,7 +14,7 @@ export function Header() {
   return (
     <header className="header">
       <div className="wrap header__inner">
-        <a className="brand" href="#top" aria-label="Vaultra home">
+        <a className="brand" href="/#top" aria-label="Vaultra home">
           <Logo />
           vaultra
         </a>
