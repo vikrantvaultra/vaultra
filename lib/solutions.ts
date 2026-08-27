@@ -11,6 +11,8 @@ export type Solution = {
   title: [string, string];
   card: string;
   metric: string;
+  /** Two short lines for the home-page card. */
+  highlights: [string, string];
   lede: string;
   automate: string[];
   outcomes: { n: string; accent: string; label: string }[];
@@ -25,6 +27,7 @@ export const solutions: Solution[] = [
     title: ["Custom", "AI agents."],
     card: "Smart systems that answer, route and execute repetitive work around the clock.",
     metric: "25 hrs/week saved",
+    highlights: ["Replies in under a minute, 24/7", "A human approves anything priced"],
     lede: "Agents built around your workflows, running on your accounts and your infrastructure. They answer, look up, route and execute — and anything priced or sensitive waits for a human click.",
     automate: [
       "After-hours enquiries answered on WhatsApp and email in under a minute",
@@ -48,6 +51,7 @@ export const solutions: Solution[] = [
     title: ["CRM &", "sales ops."],
     card: "Turn every lead, follow-up and handoff into one clean, automatic pipeline.",
     metric: "3.4× faster follow-up",
+    highlights: ["Leads captured from WhatsApp & web", "Quotes from your own price list"],
     lede: "Every lead captured, followed up and handed off in one clean pipeline — so no enquiry waits until tomorrow and none quietly go missing.",
     automate: [
       "Leads from WhatsApp, web forms and email land in the CRM by themselves",
@@ -71,6 +75,7 @@ export const solutions: Solution[] = [
     title: ["Finance", "automation."],
     card: "Invoices, payroll and reconciliations that run on time without spreadsheet chaos.",
     metric: "99.9% accuracy",
+    highlights: ["Invoices staged straight into Tally", "Bank reconciliation, daily"],
     lede: "Invoices, payroll inputs and reconciliations that run on time, every time — staged into the system you already use, with nothing posting until a person clicks approve.",
     automate: [
       "Vendor invoices read from email and staged as vouchers in Tally or your ERP",
@@ -94,6 +99,7 @@ export const solutions: Solution[] = [
     title: ["Customer", "support."],
     card: "Resolve common questions instantly and give your team context on every ticket.",
     metric: "68% tickets automated",
+    highlights: ["Instant answers on repeat questions", "Full context on every handoff"],
     lede: "The questions that repeat get answered instantly, at any hour, in any channel — and the ones that need a person arrive with the full story attached.",
     automate: [
       "Instant answers to the questions that make up most of the queue",

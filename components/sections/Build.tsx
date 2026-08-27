@@ -34,10 +34,18 @@ export function Build() {
               </span>
               <h3>{`${entry.title[0]} ${entry.title[1].replace(/\.$/, "")}`}</h3>
               <p className="scard__body">{entry.card}</p>
+              <span className="scard__points">
+                {entry.highlights.map((point) => (
+                  <span className="scard__point" key={point}>
+                    <span aria-hidden="true">✓</span>
+                    {point}
+                  </span>
+                ))}
+              </span>
               <span className="scard__foot">
                 <span className="scard__metric">{entry.metric}</span>
                 <span className="scard__go" aria-hidden="true">
-                  ↗
+                  ↗<span className="visually-hidden">View {entry.title[0]} {entry.title[1]}</span>
                 </span>
               </span>
             </Link>
