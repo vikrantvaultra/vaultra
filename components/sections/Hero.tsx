@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Cta } from "@/components/Cta";
+import { AuditTrigger } from "@/components/AuditModal";
 import { Eyebrow } from "@/components/Eyebrow";
 
 const avatars = [
@@ -25,7 +25,7 @@ export function Hero() {
           </p>
 
           <div className="hero__ctas">
-            <Cta href="#calculator">Get your free roadmap</Cta>
+            <AuditTrigger label="Get your free roadmap" />
             <a className="btn-ghost" href="#solutions">
               Explore our systems
             </a>

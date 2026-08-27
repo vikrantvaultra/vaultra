@@ -1,3 +1,4 @@
+import { AuditModal } from "@/components/AuditModal";
 import { Header } from "@/components/Header";
 import { Reveal } from "@/components/Reveal";
 import { Hero } from "@/components/sections/Hero";
@@ -24,6 +25,7 @@ export default function Page() {
       </main>
       <TrustStrip />
       <Footer />
+      <AuditModal />
     </>
   );
 }

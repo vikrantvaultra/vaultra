@@ -1,3 +1,4 @@
+import { AuditTrigger } from "@/components/AuditModal";
 import { Logo } from "@/components/Logo";
 
 export function Footer() {
@@ -16,12 +17,7 @@ export function Footer() {
               runs beautifully.
             </p>
           </div>
-          <a href="#calculator" className="btn btn--outline">
-            <span>Start with a roadmap</span>
-            <span className="btn__arrow" aria-hidden="true">
-              ↗
-            </span>
-          </a>
+          <AuditTrigger label="Start with a roadmap" variant="outline" />
         </div>
         <p className="footer__legal">
           © {new Date().getFullYear()} Vaultra Systems · Made for momentum

@@ -1,4 +1,4 @@
-import { Cta } from "@/components/Cta";
+import { AuditTrigger } from "@/components/AuditModal";
 import { Logo } from "@/components/Logo";
 import { MobileMenu } from "@/components/MobileMenu";
 
@@ -26,9 +26,7 @@ export function Header() {
           ))}
         </nav>
         <div className="header__cta">
-          <Cta href="#calculator" size="sm">
-            Audit my workflows
-          </Cta>
+          <AuditTrigger label="Audit my workflows" size="sm" />
         </div>
         <MobileMenu links={links} />
       </div>

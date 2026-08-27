@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { AuditTrigger } from "@/components/AuditModal";
 
 /** The hamburger and its dropdown panel, on screens too narrow for the nav. */
 export function MobileMenu({ links }: { links: { href: string; label: string }[] }) {
@@ -28,12 +29,9 @@ export function MobileMenu({ links }: { links: { href: string; label: string }[]
             </a>
           ))}
         </nav>
-        <a href="#calculator" className="btn" onClick={() => setOpen(false)}>
-          <span>Audit my workflows</span>
-          <span className="btn__arrow" aria-hidden="true">
-            ↗
-          </span>
-        </a>
+        <div onClick={() => setOpen(false)}>
+          <AuditTrigger label="Book free audit" />
+        </div>
       </div>
     </>
   );
