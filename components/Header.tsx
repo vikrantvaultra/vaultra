@@ -1,22 +1,22 @@
 import { Cta } from "@/components/Cta";
 import { Logo } from "@/components/Logo";
-import { siteConfig } from "@/lib/siteConfig";
+import { MobileMenu } from "@/components/MobileMenu";
 
 const links = [
-  { href: "#hours", label: "The cost" },
-  { href: "#build", label: "What we build" },
-  { href: "#proof", label: "Proof" },
-  { href: "#process", label: "How it works" },
-  { href: "#answers", label: "Answers" },
+  { href: "#solutions", label: "Solutions" },
+  { href: "#calculator", label: "ROI calculator" },
+  { href: "#proof", label: "Case studies" },
+  { href: "#about", label: "About" },
+  { href: "tel:+919876543210", label: "Call us ↗" },
 ];
 
 export function Header() {
   return (
     <header className="header">
       <div className="wrap header__inner">
-        <a className="brand" href="#top" aria-label={`${siteConfig.name} home`}>
+        <a className="brand" href="#top" aria-label="Vaultra home">
           <Logo />
-          {siteConfig.name}
+          vaultra
         </a>
         <nav className="header__nav" aria-label="Sections">
           {links.map((link) => (
@@ -25,9 +25,12 @@ export function Header() {
             </a>
           ))}
         </nav>
-        <div className="header__right">
-          <Cta size="sm">Book my free call</Cta>
+        <div className="header__cta">
+          <Cta href="#calculator" size="sm">
+            Audit my workflows
+          </Cta>
         </div>
+        <MobileMenu links={links} />
       </div>
     </header>
   );

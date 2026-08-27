@@ -1,101 +1,91 @@
-import { Folio } from "@/components/Folio";
-import { Plate } from "@/components/Plate";
+"use client";
 
-const cases = [
+import { useState } from "react";
+import { Eyebrow } from "@/components/Eyebrow";
+
+const slides = [
   {
-    who: "₹40 cr auto-components distributor · Bhiwandi",
-    what: "Vendor invoices into Tally",
-    before: "15 hrs",
-    beforeUnit: "a week typing",
-    after: "40 min",
-    afterUnit: "a week approving",
-    built: "Built in 3 weeks · 4 people freed",
+    quote: "We got back two full days every week. The ROI was obvious within the first month.",
+    initials: "AM",
+    bg: "#bd9a6f",
+    name: "Aarav Mehta",
+    role: "COO, Orbit Commerce",
   },
   {
-    who: "₹90 cr speciality chemicals maker · Vapi",
-    what: "Quotations out of the price list",
-    before: "40 min",
-    beforeUnit: "per quotation",
-    after: "4 min",
-    afterUnit: "per quotation",
-    built: "Built in 2 weeks · 60 quotes a month",
+    quote: "Vaultra understood our messy operations and made them feel beautifully simple.",
+    initials: "MS",
+    bg: "#273f51",
+    name: "Maya Shah",
+    role: "Founder, Northstar Realty",
   },
   {
-    who: "₹25 cr fasteners trader · Mumbai",
-    what: "After-hours WhatsApp enquiries",
-    before: "13 hrs",
-    beforeUnit: "unanswered daily",
-    after: "60 sec",
-    afterUnit: "to first reply",
-    built: "Built in 2 weeks · 7 days a week",
+    quote: "No more chasing updates. Our workflows now move faster than our team can.",
+    initials: "RK",
+    bg: "#6f967c",
+    name: "Rhea Kapoor",
+    role: "Head of Ops, Tandem Finance",
   },
 ];
 
 export function Proof() {
-  return (
-    <section className="section" id="proof">
-      <div className="wrap">
-        <Folio n="03" label="Proof" direction="SW" quality="stability" />
-        <h2 data-reveal>Work we have already shipped.</h2>
+  const [active, setActive] = useState(0);
+  const slide = slides[active];
 
-        <div className="proof__grid">
-          {cases.map((item) => (
-            <article className="proof" key={item.what} data-reveal>
-              <div className="proof__who">{item.who}</div>
-              <h3 className="proof__what">{item.what}</h3>
-              <div className="ba">
-                <div>
-                  <span className="ba__k">Before</span>
-                  <span className="ba__n">{item.before}</span>
-                  <div className="ba__u">{item.beforeUnit}</div>
-                </div>
-                <span className="ba__arrow" aria-hidden="true">
-                  →
+  return (
+    <section className="section section--band" id="proof">
+      <div className="wrap proof__grid">
+        <div>
+          <Eyebrow>Real people. Real operating leverage.</Eyebrow>
+          <h2 data-reveal>
+            <span className="line">They got their</span>
+            <span className="line line--sage">time back.</span>
+          </h2>
+
+          <p className="stars" data-reveal>
+            <span aria-hidden="true">★★★★★</span> 5.0 average rating
+          </p>
+
+          <figure className="tquote" data-reveal>
+            <blockquote>
+              <p>&ldquo;{slide.quote}&rdquo;</p>
+            </blockquote>
+            <figcaption className="tquote__by">
+              <span className="face face--lg" style={{ background: slide.bg }} aria-hidden="true">
+                {slide.initials}
+              </span>
+              <span>
+                <b>{slide.name}</b>
+                <span className="tquote__role">
+                  {slide.role} <i>✓ verified</i>
                 </span>
-                <div className="ba__after">
-                  <span className="ba__k">After</span>
-                  <span className="ba__n">{item.after}</span>
-                  <div className="ba__u">{item.afterUnit}</div>
-                </div>
-              </div>
-              <div className="proof__built">{item.built}</div>
-            </article>
-          ))}
+              </span>
+            </figcaption>
+          </figure>
+
+          <div className="tdots" role="tablist" aria-label="Testimonials">
+            {slides.map((s, i) => (
+              <button
+                key={s.name}
+                type="button"
+                role="tab"
+                aria-selected={active === i}
+                aria-label={`Testimonial ${i + 1}: ${s.name}`}
+                className={active === i ? "is-active" : ""}
+                onClick={() => setActive(i)}
+              />
+            ))}
+          </div>
         </div>
 
-        {/* Placeholder figures, as marked. Swap before launch. */}
-        <p className="proof__sample">Sample entries · swap in your own numbers before launch</p>
-
-        <figure className="quote" data-reveal>
-          <blockquote>
-            <p>
-              &ldquo;The first three hours of every morning used to go into typing invoices. Now
-              two people look at a screen, click approve, and get on with the day.&rdquo;
-            </p>
-          </blockquote>
-          <figcaption>Sample quote · name · role · company type</figcaption>
-        </figure>
-
-        <div className="proof__plates">
-          <Plate
-            src="/images/ledger-ruler.jpg"
-            alt="A closed dark green hardbound ledger with a brass ruler laid across the cover"
-            width={1600}
-            height={900}
-            n="03"
-            caption="The books, closed by seven"
-            sizes="(max-width: 760px) 100vw, 540px"
-            dark
-          />
-          <Plate
-            src="/images/quote-paper-pen.jpg"
-            alt="A single sheet of paper held by a brass paperweight with a fountain pen beside it"
-            width={1600}
-            height={1066}
-            n="04"
-            caption="One number, in writing"
-            sizes="(max-width: 760px) 100vw, 540px"
-          />
+        <div className="proof__stat on-dark" data-reveal>
+          <span className="proof__mark" aria-hidden="true">
+            &ldquo;
+          </span>
+          <span className="proof__n">+42%</span>
+          <p>
+            average operating margin improvement across our first 90 days together.
+          </p>
+          <span className="proof__hr" aria-hidden="true" />
         </div>
       </div>
     </section>

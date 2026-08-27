@@ -1,26 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Young_Serif, Public_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Outfit, DM_Mono } from "next/font/google";
 import { siteConfig } from "@/lib/siteConfig";
 import "./globals.css";
 
-const youngSerif = Young_Serif({
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
   variable: "--font-display",
 });
 
-const publicSans = Public_Sans({
+const dmMono = DM_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-body",
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["400", "500"],
   display: "swap",
   variable: "--font-mono",
 });
@@ -67,7 +59,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#faf5e9",
+  themeColor: "#F7F7F2",
   width: "device-width",
   initialScale: 1,
 };
@@ -89,10 +81,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en-IN"
-      className={`${youngSerif.variable} ${publicSans.variable} ${ibmPlexMono.variable}`}
-    >
+    <html lang="en-IN" className={`${outfit.variable} ${dmMono.variable}`}>
       <body>
         {children}
         <script

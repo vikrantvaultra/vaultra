@@ -1,13 +1,12 @@
 import { Header } from "@/components/Header";
 import { Reveal } from "@/components/Reveal";
-import { FloatCta } from "@/components/FloatCta";
 import { Hero } from "@/components/sections/Hero";
-import { Hours } from "@/components/sections/Hours";
+import { Stats } from "@/components/sections/Stats";
+import { Contrast } from "@/components/sections/Contrast";
 import { Build } from "@/components/sections/Build";
+import { Roi } from "@/components/sections/Roi";
 import { Proof } from "@/components/sections/Proof";
-import { Process } from "@/components/sections/Process";
-import { Answers } from "@/components/sections/Answers";
-import { Booking } from "@/components/sections/Booking";
+import { TrustStrip } from "@/components/sections/TrustStrip";
 import { Footer } from "@/components/sections/Footer";
 
 export default function Page() {
@@ -17,15 +16,14 @@ export default function Page() {
       <Header />
       <main>
         <Hero />
-        <Hours />
+        <Stats />
+        <Contrast />
         <Build />
+        <Roi />
         <Proof />
-        <Process />
-        <Answers />
-        <Booking />
       </main>
+      <TrustStrip />
       <Footer />
-      <FloatCta />
     </>
   );
 }

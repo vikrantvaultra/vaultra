@@ -1,95 +1,62 @@
+import Image from "next/image";
 import { Cta } from "@/components/Cta";
-import { Folio } from "@/components/Folio";
-import { Stamp } from "@/components/Stamp";
-import { reassurance, siteConfig } from "@/lib/siteConfig";
+import { Eyebrow } from "@/components/Eyebrow";
+
+const avatars = [
+  { t: "AM", bg: "#6f967c" },
+  { t: "RK", bg: "#bd7d55" },
+  { t: "MS", bg: "#273f51" },
+  { t: "+", bg: "#0d3b2e" },
+];
 
 export function Hero() {
   return (
     <section className="hero" id="top">
-      <div className="wrap">
-        <Folio n="00" label={siteConfig.tagline} direction="NE" quality="clarity" />
+      <div className="wrap hero__grid">
+        <div>
+          <Eyebrow>The operating system for your next stage</Eyebrow>
+          <h1>
+            <span className="line">Make busywork</span>
+            <span className="line line--sage">disappear.</span>
+          </h1>
+          <p className="hero__sub">
+            We build custom AI agents and automated systems that handle repetitive
+            work&mdash;so your team can focus on growth.
+          </p>
 
-        <div className="hero__grid">
-          <div>
-            <h1>Your team is still typing invoices by hand.</h1>
-            <p className="lede">
-              We find the repetitive work eating your staff&apos;s hours: invoice entry,
-              quotations, weekly reports, after-hours enquiries. Then we replace it with
-              software built around whatever you already run. Two to four weeks. One fixed
-              price, agreed in writing before anyone starts.
-            </p>
-
-            <div className="anchor" data-reveal>
-              <span>
-                Typical manual waste <b>₹3–6 lakh a year</b>
-              </span>
-              <span className="is-pay">
-                Typical build pays for itself <b>in under 4 months</b>
-              </span>
-            </div>
-
-            <div className="hero__ctas">
-              <Cta glint>Book my free 20-minute call</Cta>
-              <a className="btn-ghost" href="#hours">
-                Count my hours first
-              </a>
-            </div>
-            <p className="reassure">
-              {reassurance} And we&apos;ll leave you alone if it won&apos;t.
-            </p>
-
-            <div className="hero__trust" data-reveal>
-              <Stamp>NDA first</Stamp>
-              <Stamp>Fixed price</Stamp>
-              <Stamp>No lock-in</Stamp>
-              <p>Works with Tally, Zoho, SAP, Excel, WhatsApp, or whatever you run.</p>
-            </div>
+          <div className="hero__ctas">
+            <Cta href="#calculator">Get your free roadmap</Cta>
+            <a className="btn-ghost" href="#solutions">
+              Explore our systems
+            </a>
           </div>
 
-          {/* One vendor invoice, and the Tally voucher it becomes. */}
-          <div
-            className="ruled voucher"
-            data-reveal
-            aria-label="Example: a vendor invoice staged as a Tally purchase voucher"
-            role="img"
-          >
-            <div className="voucher__head">
-              <span>Vendor mail · attachment.pdf</span>
-              <span>Read</span>
+          <div className="hero__social" data-reveal>
+            <div className="faces" aria-hidden="true">
+              {avatars.map((a) => (
+                <span key={a.t} className="face" style={{ background: a.bg }}>
+                  {a.t}
+                </span>
+              ))}
             </div>
-            <div className="voucher__body">
-              <div className="v-row">
-                <span className="v-row__l">Shree Metals Pvt Ltd</span>
-                <span className="v-row__r">Inv SM/2114</span>
-              </div>
-              <div className="v-row">
-                <span className="v-row__l">Against purchase order</span>
-                <span className="v-row__r">PO 4471 ✓ matched</span>
-              </div>
-              <div className="v-row v-row--strong">
-                <span className="v-row__l">Invoice total</span>
-                <span className="v-row__r">₹ 4,18,600.00</span>
-              </div>
-              <div className="v-sep">
-                <span>staged in Tally as purchase voucher</span>
-              </div>
-              <div className="v-row">
-                <span className="v-row__l">Purchase A/c</span>
-                <span className="v-row__r">Dr 4,18,600.00</span>
-              </div>
-              <div className="v-row">
-                <span className="v-row__l">Shree Metals Pvt Ltd</span>
-                <span className="v-row__r is-credit">Cr 4,18,600.00</span>
-              </div>
-              <span className="voucher__stamp">
-                <Stamp strike="scroll">Staged</Stamp>
-              </span>
-            </div>
-            <div className="voucher__foot">
-              <span>Waiting on one approval click. Nothing posts unseen.</span>
-              <span className="voucher__ok">HUMAN APPROVES</span>
-            </div>
+            <p>
+              <b>200+ businesses</b>
+              <span>trust Vaultra with their ops</span>
+            </p>
           </div>
+        </div>
+
+        <div className="hero__visual" data-reveal>
+          {/* The floating stat cards are part of the artwork itself. */}
+          <Image
+            src="/images/hero-v2.png"
+            alt="Operations leader reviewing an automation dashboard. Overlay cards read: hours saved this month 10,248, up 24% vs last month; workflow complete, invoice pipeline, just now."
+            width={1104}
+            height={974}
+            priority
+            sizes="(max-width: 980px) 100vw, 555px"
+            className="hero__photo"
+          />
         </div>
       </div>
     </section>

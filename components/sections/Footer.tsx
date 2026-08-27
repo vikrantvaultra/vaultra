@@ -1,20 +1,31 @@
 import { Logo } from "@/components/Logo";
-import { siteConfig } from "@/lib/siteConfig";
-import { whatsappHref } from "@/lib/siteConfig";
 
 export function Footer() {
   return (
     <footer className="footer">
-      <div className="wrap footer__inner">
-        <a className="brand" href="#top">
-          <Logo size={20} />
-          {siteConfig.name}
-        </a>
-        <span>
-          Automation for mid-market operations · {siteConfig.city}, India ·{" "}
-          <a href={whatsappHref}>WhatsApp</a>
-        </span>
-        <span>© {new Date().getFullYear()} {siteConfig.name}</span>
+      <div className="wrap">
+        <div className="footer__grid">
+          <div>
+            <a className="brand" href="#top">
+              <Logo size={26} />
+              vaultra
+            </a>
+            <p className="footer__sign">
+              Build a business that
+              <br />
+              runs beautifully.
+            </p>
+          </div>
+          <a href="#calculator" className="btn btn--outline">
+            <span>Start with a roadmap</span>
+            <span className="btn__arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
+        </div>
+        <p className="footer__legal">
+          © {new Date().getFullYear()} Vaultra Systems · Made for momentum
+        </p>
       </div>
     </footer>
   );
