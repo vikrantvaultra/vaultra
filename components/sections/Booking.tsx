@@ -3,7 +3,6 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { Folio } from "@/components/Folio";
 import { Plate } from "@/components/Plate";
-import { Slots } from "@/components/Slots";
 import { Stamp } from "@/components/Stamp";
 import { reassurance, siteConfig, whatsappHref } from "@/lib/siteConfig";
 
@@ -212,7 +211,6 @@ export function Booking() {
             <form className="form" data-reveal onSubmit={handleSubmit} noValidate>
               <div className="form__top">
                 <h3>Book the 20-minute call</h3>
-                <Slots />
               </div>
 
               <div className={fieldClass("name")}>

@@ -383,42 +383,6 @@ h2 {
   margin-top: 12px;
 }
 
-/* ============ CAPACITY PILL ============ */
-
-.slots {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  background: var(--fire-soft);
-  border: 1px solid #efc9a4;
-  color: var(--fire-dark);
-  border-radius: 999px;
-  padding: 6px 13px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.slots__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--fire);
-  flex: none;
-  animation: blink 1.6s ease-in-out infinite;
-}
-@keyframes blink {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.35;
-  }
-}
-
 /* ============ CTA BAND ============ */
 
 .cta-band {
@@ -1546,10 +1510,6 @@ h2 {
   z-index: 60;
   right: 22px;
   bottom: calc(22px + env(safe-area-inset-bottom));
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 8px;
   opacity: 0;
   transform: translateY(14px);
   pointer-events: none;
@@ -1561,17 +1521,6 @@ h2 {
   opacity: 1;
   transform: none;
   pointer-events: auto;
-}
-.float-cta__note {
-  font-family: var(--mono);
-  font-size: 10.5px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  background: var(--sheet);
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  padding: 5px 11px;
-  color: var(--ink-60);
 }
 
 /* ============ FOOTER ============ */
@@ -1602,12 +1551,6 @@ h2 {
 /* ============ RESPONSIVE ============
    Fluid carries most of it. These are the corrections fluid could not
    cover, largest breakpoint first. */
-
-@media (max-width: 1320px) {
-  .header__right .slots {
-    display: none;
-  }
-}
 
 @media (max-width: 960px) {
   .header__nav {
@@ -1693,11 +1636,6 @@ h2 {
     left: 0;
     right: 0;
     bottom: 0;
-    align-items: stretch;
-    gap: 0;
-  }
-  .float-cta__note {
-    display: none;
   }
   .float-cta .btn {
     border-radius: 0;
@@ -1807,9 +1745,6 @@ h2 {
   }
   .btn--glint::after {
     display: none;
-  }
-  .slots__dot {
-    animation: none;
   }
   *,
   *::before,

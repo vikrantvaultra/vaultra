@@ -68,7 +68,6 @@ public by design — it can only ever deliver mail to the address you registered
 | --- | --- |
 | `lib/siteConfig.ts` → `whatsapp` | `91XXXXXXXXXX` — the real WhatsApp number, digits only, country code first. It feeds every "Message us on WhatsApp" link. |
 | `lib/siteConfig.ts` → `callers` | Who is named in the booking confirmation. |
-| `lib/siteConfig.ts` → `capacity` | The month and the number of build slots left, shown in the header pill, the form and the floating bar. **This is meant to move** — a scarcity figure that never changes stops being believed. |
 | `lib/siteConfig.ts` → `assumedBuildCost` | The midpoint build price the calculator's payback line is worked out against. |
 | `components/sections/Proof.tsx` | The three case studies and the pull quote are sample entries, labelled as such on the page. Swap in real numbers and delete `.proof__sample`. |
 
@@ -96,12 +95,11 @@ app/
   robots.ts       robots.txt
   sitemap.ts      sitemap.xml
 components/
-  Header.tsx      sticky header, nav, capacity pill, the ask
+  Header.tsx      sticky header, nav, the ask
   Cta.tsx         the saffron button
   Folio.tsx       the folio number / label / direction section head
   Logo.tsx        the three-bar mark
   Plate.tsx       a photograph, filed as a numbered plate
-  Slots.tsx       the capacity pill
   Stamp.tsx       a rubber stamp, struck four degrees off true
   Reveal.tsx      fade-and-rise on scroll, and the stamp strike
   FloatCta.tsx    the floating ask, a full-width bar on phones
@@ -159,9 +157,7 @@ Verified with no horizontal overflow at 320, 360, 390, 420, 520, 640, 768,
 The corrections that fluid alone could not cover live at the end of
 `app/globals.css`, largest first:
 
-- **1320px / 960px** — the header sheds the capacity pill, then the nav, rather
-  than crush the wordmark. The pill also reads in short form in the bar (`Sep ·
-  1 slot left`) — the full sentence does not fit beside five links and the ask.
+- **960px** — the header sheds the nav rather than crush the wordmark.
 - **940px / 900px / 880px / 860px / 760px** — the hero, booking, build head,
   calculator and steps, and the guarantee each go to one column.
 - **860px** — the rate field and the people counter render at 16px. iOS Safari
@@ -182,5 +178,5 @@ The corrections that fluid alone could not cover live at the end of
   iPhone home indicator.
 - Hover effects are suppressed under `@media (hover: none)`, where they stick
   after a tap.
-- `prefers-reduced-motion` reveals everything outright and stops the stamps,
-  the button sheen and the capacity dot animating.
+- `prefers-reduced-motion` reveals everything outright and stops the stamps
+  and the button sheen animating.

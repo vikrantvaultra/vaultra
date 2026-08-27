@@ -26,13 +26,6 @@ export const siteConfig = {
   callers: "Someone from the team",
 
   /**
-   * Honest scarcity — the capacity pill in the header, the booking form and
-   * the floating bar all read from here. Update it as the month fills and
-   * when it resets; a number that never moves stops being believed.
-   */
-  capacity: { month: "September", left: 1 },
-
-  /**
    * The midpoint build price the payback line in the calculator is worked
    * out against. Rupees.
    */
@@ -45,16 +38,3 @@ export const siteConfig = {
 export const whatsappHref = `https://wa.me/${siteConfig.whatsapp}`;
 
 export const reassurance = "No pitch. We'll tell you if automation won't help.";
-
-/** "September · 1 build slot left" — pluralised. The form and the floating bar. */
-export const capacityText = `${siteConfig.capacity.month} · ${siteConfig.capacity.left} build slot${
-  siteConfig.capacity.left === 1 ? "" : "s"
-} left`;
-
-/**
- * "Sep · 1 slot left" — the header bar carries the brand, five links and the
- * one ask, and the full sentence does not fit beside them.
- */
-export const capacityTextShort = `${siteConfig.capacity.month.slice(0, 3)} · ${
-  siteConfig.capacity.left
-} slot${siteConfig.capacity.left === 1 ? "" : "s"} left`;

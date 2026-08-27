@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { capacityText } from "@/lib/siteConfig";
 
 /**
  * The ask, kept within reach once the hero has gone by — and taken away
@@ -34,7 +33,6 @@ export function FloatCta() {
 
   return (
     <div className={`float-cta${shown ? " is-shown" : ""}`} aria-hidden={!shown}>
-      <span className="float-cta__note">{capacityText}</span>
       <a href="#book" className="btn" tabIndex={shown ? 0 : -1}>
         <span>Book my free call</span>
         <span className="btn__arrow" aria-hidden="true">

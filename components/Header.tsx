@@ -1,6 +1,5 @@
 import { Cta } from "@/components/Cta";
 import { Logo } from "@/components/Logo";
-import { Slots } from "@/components/Slots";
 import { siteConfig } from "@/lib/siteConfig";
 
 const links = [
@@ -27,7 +26,6 @@ export function Header() {
           ))}
         </nav>
         <div className="header__right">
-          <Slots compact />
           <Cta size="sm">Book my free call</Cta>
         </div>
       </div>
