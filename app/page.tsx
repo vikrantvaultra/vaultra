@@ -5,6 +5,7 @@ import { Hero } from "@/components/sections/Hero";
 import { Stats } from "@/components/sections/Stats";
 import { Contrast } from "@/components/sections/Contrast";
 import { Build } from "@/components/sections/Build";
+import { Integrations } from "@/components/sections/Integrations";
 import { Roi } from "@/components/sections/Roi";
 import { Proof } from "@/components/sections/Proof";
 import { TrustStrip } from "@/components/sections/TrustStrip";
@@ -20,6 +21,7 @@ export default function Page() {
         <Stats />
         <Contrast />
         <Build />
+        <Integrations />
         <Roi />
         <Proof />
       </main>
