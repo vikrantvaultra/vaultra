@@ -24,6 +24,21 @@ export function isCategory(value: string): value is Category {
 /** Where a subscriber is in the sign-up conversation. */
 export type Step = "awaiting_categories" | "awaiting_budget" | "ready";
 
+/** A deal an admin is part-way through posting. */
+export interface DealDraft {
+  url: string;
+  title?: string;
+  price?: number;
+  mrp?: number | null;
+  category?: Category;
+}
+
+/** Where an admin is in the post-a-deal conversation. */
+export interface AdminDraft {
+  step: "title" | "price" | "category" | "confirm";
+  draft: DealDraft;
+}
+
 export interface Subscriber {
   /** Channel-native id: a Telegram chat id, or a WhatsApp phone number. */
   id: string;
@@ -41,6 +56,8 @@ export interface Subscriber {
   /** Ids of deals already sent, newest first, capped so the record stays small. */
   sentDealIds: string[];
   active: boolean;
+  /** Set only while an admin is posting a deal. */
+  admin?: AdminDraft;
 }
 
 export interface Deal {

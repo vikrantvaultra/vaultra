@@ -9,7 +9,7 @@
 
 import { readyChannels } from "./channels";
 import { config } from "./config";
-import { renderDeal } from "./handlers/deals";
+import { renderDeal } from "./render";
 import { listDeals, listSubscribers, matchDeals, saveSubscriber } from "./store";
 
 export interface BroadcastResult {

@@ -7,9 +7,10 @@
  * Product Advertising API for automated price tracking later.
  */
 
-import { findUrl, formatRupees, withAffiliateTag, expandShortLink } from "../affiliate";
-import { config, isAdmin } from "../config";
-import { addDeal, listDeals, matchDeals, saveSubscriber } from "../store";
+import { formatRupees } from "../affiliate";
+import { config } from "../config";
+import { renderDeal } from "../render";
+import { listDeals, matchDeals, saveSubscriber } from "../store";
 import {
   CATEGORIES,
   isCategory,
@@ -17,6 +18,7 @@ import {
   type Deal,
   type Subscriber,
 } from "../types";
+import { handleAdminMessage } from "./admin";
 
 const categoryList = CATEGORIES.map(
   (name, index) => `${index + 1}. ${name}`,
@@ -36,16 +38,6 @@ const HELP = `Here's what I understand:
 • *categories* — change what you follow
 • *budget* — change your price limit
 • *stop* — unsubscribe (come back any time with "start")`;
-
-/** One deal, formatted for a chat message. */
-export function renderDeal(deal: Deal): string {
-  const off =
-    deal.mrp && deal.mrp > deal.price
-      ? ` (${Math.round(((deal.mrp - deal.price) / deal.mrp) * 100)}% off)`
-      : "";
-
-  return `🔥 ${deal.title}\n${formatRupees(deal.price)}${off}\n${withAffiliateTag(deal.url)}`;
-}
 
 function parseCategories(text: string): Category[] | null {
   const cleaned = text.toLowerCase().trim();
@@ -113,54 +105,6 @@ function summary(subscriber: Subscriber): string {
 }
 
 /**
- * Admin-only: `/deal <url> | <title> | <price> | <category> [| <mrp>]`
- * Returns the reply text, or null when this is not a deal command.
- */
-async function handleAdminDeal(
-  text: string,
-  userId: string,
-): Promise<string | null> {
-  if (!text.toLowerCase().startsWith("/deal")) return null;
-  if (!isAdmin(userId)) return "That command is for admins only.";
-
-  const parts = text
-    .slice("/deal".length)
-    .split("|")
-    .map((part) => part.trim());
-
-  if (parts.length < 4) {
-    return "Format: /deal <url> | <title> | <price> | <category> [| <mrp>]";
-  }
-
-  const [rawUrl, title, rawPrice, rawCategory, rawMrp] = parts;
-  const url = findUrl(rawUrl);
-  if (!url) return "That first part doesn't look like a link.";
-
-  const price = Number(rawPrice.replace(/[₹,\s]/g, ""));
-  if (!Number.isFinite(price) || price <= 0) return "Price must be a number.";
-
-  const category = rawCategory.toLowerCase();
-  if (!isCategory(category)) {
-    return `Category must be one of: ${CATEGORIES.join(", ")}`;
-  }
-
-  const mrp = rawMrp ? Number(rawMrp.replace(/[₹,\s]/g, "")) : NaN;
-
-  const deal: Deal = {
-    id: `${Date.now().toString(36)}`,
-    title,
-    url: await expandShortLink(url),
-    price,
-    mrp: Number.isFinite(mrp) && mrp > price ? mrp : null,
-    category,
-    createdAt: Date.now(),
-  };
-
-  await addDeal(deal);
-  return `✅ Saved. It goes out on the next broadcast.\n\n${renderDeal(deal)}`;
-}
-
-/**
  * Handles one incoming message and returns what to reply with. The caller owns
  * sending, so this stays free of channel details.
  */
@@ -168,7 +112,8 @@ export async function handleDealsMessage(
   subscriber: Subscriber,
   text: string,
 ): Promise<string> {
-  const adminReply = await handleAdminDeal(text, subscriber.id);
+  // Posting deals, and the mid-draft answers that follow, belong to admins.
+  const adminReply = await handleAdminMessage(subscriber, text);
   if (adminReply) return adminReply;
 
   // Telegram clients send "/start", and its menu offers "/help", "/deals" and

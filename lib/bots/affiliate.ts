@@ -44,11 +44,16 @@ export function withAffiliateTag(url: string): string {
     const parsed = new URL(url);
     if (!isAmazon(parsed)) return url;
 
-    parsed.searchParams.set("tag", config.amazonTag);
-    // Tracking noise Amazon adds to shared links; it makes messages unreadable.
-    for (const junk of ["ref", "ref_", "pf_rd_r", "pf_rd_p", "psc", "th"]) {
-      parsed.searchParams.delete(junk);
-    }
+    // A shared Amazon link drags along a paragraph of tracking parameters,
+    // which in a chat message pushes the price off the screen. A /dp/ link
+    // needs none of them, so keep the tag alone.
+    const keepParams =
+      parsed.pathname.includes("/dp/") || parsed.pathname.includes("/gp/")
+        ? new URLSearchParams()
+        : parsed.searchParams;
+
+    keepParams.set("tag", config.amazonTag);
+    parsed.search = keepParams.toString();
     return parsed.toString();
   } catch {
     return url;
