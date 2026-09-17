@@ -33,8 +33,10 @@ export const config = {
   },
 
   upstash: {
-    url: env("BOT_UPSTASH_URL"),
-    token: env("BOT_UPSTASH_TOKEN"),
+    // Vercel's Upstash integration injects KV_REST_API_* itself, so accept
+    // those as-is and let BOT_UPSTASH_* override when both are present.
+    url: env("BOT_UPSTASH_URL") ?? env("KV_REST_API_URL"),
+    token: env("BOT_UPSTASH_TOKEN") ?? env("KV_REST_API_TOKEN"),
   },
 
   /** Guards the cron route, which is otherwise a public URL. */
