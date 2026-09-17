@@ -83,6 +83,27 @@ function parseBudget(text: string): number | null | "invalid" {
   return amount > 0 ? Math.round(amount) : "invalid";
 }
 
+/**
+ * What to say when a subscriber's filters match nothing. An empty answer is the
+ * fastest way to lose someone who just signed up, so show live deals from
+ * outside their filters rather than leaving them with silence.
+ */
+function nothingMatched(subscriber: Subscriber, deals: Deal[]): string {
+  const opening = `Nothing in ${summary(subscriber)} right now.`;
+
+  const others = deals
+    .filter((deal) => !subscriber.sentDealIds.includes(deal.id))
+    .slice(0, 2);
+
+  if (others.length === 0) {
+    return `${opening} I'll ping you the moment something lands. 🔎`;
+  }
+
+  return `${opening} Here's what else is live today 👇\n\n${others
+    .map(renderDeal)
+    .join("\n\n")}\n\nThese are outside your filters — send *categories* or *budget* to widen them.`;
+}
+
 function summary(subscriber: Subscriber): string {
   const budget =
     subscriber.maxPrice === null
@@ -172,10 +193,9 @@ export async function handleDealsMessage(
     }
 
     if (subscriber.step === "ready" && command === "deals") {
-      const live = matchDeals(subscriber, await listDeals()).slice(0, 5);
-      if (live.length === 0) {
-        return `Nothing matching ${summary(subscriber)} right now. I'll message you the moment something lands. 🔎`;
-      }
+      const all = await listDeals();
+      const live = matchDeals(subscriber, all).slice(0, 5);
+      if (live.length === 0) return nothingMatched(subscriber, all);
       // Showing these now marks them sent, so the broadcast won't repeat them.
       subscriber.sentDealIds = [
         ...live.map((deal) => deal.id),
@@ -229,13 +249,11 @@ export async function handleDealsMessage(
     subscriber.step = "ready";
     await saveSubscriber(subscriber);
 
-    const live = matchDeals(subscriber, await listDeals()).slice(
-      0,
-      config.limits.dealsPerRun,
-    );
+    const all = await listDeals();
+    const live = matchDeals(subscriber, all).slice(0, config.limits.dealsPerRun);
 
     if (live.length === 0) {
-      return `All set — ${summary(subscriber)} 🎉\n\nNothing matching right now, but I'll ping you the moment it lands.`;
+      return `All set — ${summary(subscriber)} 🎉\n\n${nothingMatched(subscriber, all)}`;
     }
 
     subscriber.sentDealIds = [
