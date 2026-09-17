@@ -19,7 +19,7 @@ export function Footer() {
             <span className="line">Build a business that</span>
             <span className="line line--sage">runs beautifully.</span>
           </h2>
-          <AuditTrigger label="Start with a roadmap" />
+          <AuditTrigger label="Get a free plan" />
         </div>
 
         <div className="footer__cols">

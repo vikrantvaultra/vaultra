@@ -151,9 +151,9 @@ export function Roi() {
             </div>
           </div>
 
-          <AuditTrigger label="Get my exact number" block />
+          <AuditTrigger label="Get my exact savings" block />
           <p className="roi__note">
-            Directional estimate · one number in writing after the audit
+            Directional estimate · your free plan has the exact number
           </p>
         </div>
       </div>

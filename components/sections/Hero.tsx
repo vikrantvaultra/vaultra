@@ -25,7 +25,7 @@ export function Hero() {
           </p>
 
           <div className="hero__ctas">
-            <AuditTrigger label="Get your free roadmap" />
+            <AuditTrigger label="Get a free plan" />
             <a className="btn-ghost" href="#solutions">
               Explore our systems
             </a>

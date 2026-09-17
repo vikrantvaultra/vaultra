@@ -25,7 +25,7 @@ export function Header() {
           ))}
         </nav>
         <div className="header__cta">
-          <AuditTrigger label="Audit my workflows" size="sm" />
+          <AuditTrigger label="Get a free plan" size="sm" />
         </div>
         <MobileMenu links={links} />
       </div>
