@@ -1,0 +1,40 @@
+# Fires the deal broadcast every three hours.
+#
+# Vercel's Hobby plan only runs cron once a day, so the schedule lives here
+# instead. GitHub queues scheduled runs on a best-effort basis and can delay
+# them by several minutes, which is fine for deal alerts.
+#
+# Needs one repository secret: BOT_BROADCAST_URL, set to
+#   https://vaultra.in/api/bots/cron/deals?secret=<BOT_CRON_SECRET>
+# Settings → Secrets and variables → Actions → New repository secret.
+
+name: Deal broadcast
+
+on:
+  schedule:
+    - cron: "0 */3 * * *"
+  workflow_dispatch: # lets you fire one by hand from the Actions tab
+
+jobs:
+  broadcast:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call the broadcast route
+        run: |
+          if [ -z "${{ secrets.BOT_BROADCAST_URL }}" ]; then
+            echo "BOT_BROADCAST_URL is not set — add it in repository secrets."
+            exit 1
+          fi
+
+          response=$(curl -sS -w "\n%{http_code}" --max-time 300 \
+            "${{ secrets.BOT_BROADCAST_URL }}")
+
+          body=$(echo "$response" | sed '$d')
+          status=$(echo "$response" | tail -n1)
+
+          echo "HTTP $status"
+          echo "$body"
+
+          # A non-200 means the secret is wrong or the route is down; fail loudly
+          # so the run shows red rather than passing silently.
+          [ "$status" = "200" ]
