@@ -30,7 +30,7 @@ export function MobileMenu({ links }: { links: { href: string; label: string }[]
           ))}
         </nav>
         <div onClick={() => setOpen(false)}>
-          <AuditTrigger label="Book free audit" />
+          <AuditTrigger label="Get a free plan" />
         </div>
       </div>
     </>

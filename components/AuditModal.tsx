@@ -43,30 +43,16 @@ export function AuditTrigger({
   );
 }
 
-const BUSINESSES = ["E-commerce", "Real Estate", "Finance", "Healthcare", "Agency"];
-
-const DRAINS = [
-  "Too much manual data entry",
-  "Slow lead follow-ups",
-  "Invoice & payroll admin",
-  "Customer support backlog",
-];
-
 const FIELDS = [
-  { name: "name", placeholder: "Your name", type: "text", autoComplete: "name" },
-  { name: "email", placeholder: "Work email", type: "email", autoComplete: "email" },
-  { name: "phone", placeholder: "Phone number", type: "tel", autoComplete: "tel" },
-  { name: "company", placeholder: "Company name", type: "text", autoComplete: "organization" },
-  { name: "size", placeholder: "Company size", type: "text", autoComplete: "off" },
+  { name: "name", label: "Name", type: "text", autoComplete: "name" },
+  { name: "email", label: "Email", type: "email", autoComplete: "email" },
+  { name: "phone", label: "Phone number", type: "tel", autoComplete: "tel" },
 ] as const;
 
 const ENDPOINT = "https://api.web3forms.com/submit";
 
 export function AuditModal() {
   const [open, setOpen] = useState(false);
-  const [step, setStep] = useState(1);
-  const [business, setBusiness] = useState("");
-  const [drain, setDrain] = useState("");
   const [form, setForm] = useState<Record<string, string>>({});
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -81,9 +67,6 @@ export function AuditModal() {
 
   const close = () => {
     setOpen(false);
-    setStep(1);
-    setBusiness("");
-    setDrain("");
     setForm({});
     setError(null);
     setSent(false);
@@ -92,7 +75,7 @@ export function AuditModal() {
 
   useEffect(() => {
     if (!open) return;
-    dialogRef.current?.focus();
+    dialogRef.current?.querySelector("input")?.focus();
     document.body.style.overflow = "hidden";
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") close();
@@ -105,8 +88,10 @@ export function AuditModal() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open]);
 
+  const name = (form.name || "").trim();
   const emailOk = /.+@.+\..+/.test(form.email || "");
-  const canSubmit = (form.name || "").trim() !== "" && emailOk;
+  const phoneOk = (form.phone || "").replace(/\D/g, "").length >= 7;
+  const canSubmit = name !== "" && emailOk && phoneOk;
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -127,16 +112,12 @@ export function AuditModal() {
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
           access_key: siteConfig.web3formsKey,
-          subject: `Workflow audit: ${form.name}${form.company ? ` · ${form.company}` : ""}`,
+          subject: `Free plan request: ${name}`,
           from_name: "Vaultra website",
-          "business type": business,
-          "time drain": drain,
-          name: form.name,
+          name,
           email: form.email,
-          phone: form.phone || "Not given",
-          company: form.company || "Not given",
-          "company size": form.size || "Not given",
-          source: "Audit my workflows modal",
+          phone: form.phone,
+          source: "Free plan form",
         }),
       });
       const result = await response.json().catch(() => null);
@@ -162,7 +143,7 @@ export function AuditModal() {
         className="modal"
         role="dialog"
         aria-modal="true"
-        aria-label="Automation score"
+        aria-labelledby="audit-modal-title"
         tabIndex={-1}
         ref={dialogRef}
       >
@@ -175,15 +156,12 @@ export function AuditModal() {
             <span className="modal__check" aria-hidden="true">
               ✓
             </span>
-            <p className="modal__eyebrow">Automation score · done</p>
-            <h3 className="modal__title">
-              <span className="line">Your roadmap is</span>
-              <span className="line line--sage">on its way.</span>
+            <h3 className="modal__title" id="audit-modal-title">
+              <span className="line">Thanks, {name}.</span>
+              <span className="line line--sage">We&rsquo;ll be in touch.</span>
             </h3>
             <p className="modal__q">
-              We&rsquo;ll reply on {form.email}
-              {business ? ` with a plan for your ${business.toLowerCase()} workflows` : ""} within
-              one working day.
+              We&rsquo;ll contact you at {form.email} within one working day.
             </p>
             <button type="button" className="btn btn--block" onClick={close}>
               <span>Done</span>
@@ -193,111 +171,43 @@ export function AuditModal() {
             </button>
           </div>
         ) : (
-          <>
-            <p className="modal__eyebrow">Automation score · 0{step}/3</p>
-            <h3 className="modal__title">
-              <span className="line">Let&rsquo;s find your</span>
-              <span className="line line--sage">unlocked hours.</span>
+          <form onSubmit={handleSubmit} noValidate>
+            <h3 className="modal__title" id="audit-modal-title">
+              <span className="line">Get your</span>
+              <span className="line line--sage">free plan.</span>
             </h3>
-            <div className="modal__progress" aria-hidden="true">
-              <span style={{ width: `${(step / 3) * 100}%` }} />
+            <p className="modal__q">
+              Leave your details and we&rsquo;ll show you what we can automate for you.
+            </p>
+            <div className="modal__fields">
+              {FIELDS.map((field) => (
+                <label key={field.name} className="modal__field">
+                  <span>{field.label}</span>
+                  <input
+                    name={field.name}
+                    type={field.type}
+                    autoComplete={field.autoComplete}
+                    required
+                    value={form[field.name] || ""}
+                    onChange={(e) =>
+                      setForm((prev) => ({ ...prev, [field.name]: e.target.value }))
+                    }
+                  />
+                </label>
+              ))}
             </div>
-
-            {step === 1 ? (
-              <>
-                <p className="modal__q">What kind of business are you building?</p>
-                <div className="modal__options">
-                  {BUSINESSES.map((option) => (
-                    <button
-                      type="button"
-                      key={option}
-                      className={`opt${business === option ? " is-picked" : ""}`}
-                      aria-pressed={business === option}
-                      onClick={() => setBusiness(option)}
-                    >
-                      {option}
-                      <span aria-hidden="true">›</span>
-                    </button>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  className="btn btn--block"
-                  disabled={!business}
-                  onClick={() => setStep(2)}
-                >
-                  <span>Next step</span>
-                  <span className="btn__arrow" aria-hidden="true">
-                    ↗
-                  </span>
-                </button>
-              </>
+            <button type="submit" className="btn btn--block" disabled={!canSubmit || pending}>
+              <span>{pending ? "Sending…" : "Submit"}</span>
+              <span className="btn__arrow" aria-hidden="true">
+                ↗
+              </span>
+            </button>
+            {error ? (
+              <p className="modal__error" role="alert">
+                {error}
+              </p>
             ) : null}
-
-            {step === 2 ? (
-              <>
-                <p className="modal__q">Where does time disappear today?</p>
-                <div className="modal__options">
-                  {DRAINS.map((option) => (
-                    <button
-                      type="button"
-                      key={option}
-                      className={`opt${drain === option ? " is-picked" : ""}`}
-                      aria-pressed={drain === option}
-                      onClick={() => setDrain(option)}
-                    >
-                      {option}
-                      <span aria-hidden="true">›</span>
-                    </button>
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  className="btn btn--block"
-                  disabled={!drain}
-                  onClick={() => setStep(3)}
-                >
-                  <span>Almost there</span>
-                  <span className="btn__arrow" aria-hidden="true">
-                    ↗
-                  </span>
-                </button>
-              </>
-            ) : null}
-
-            {step === 3 ? (
-              <form onSubmit={handleSubmit} noValidate>
-                <p className="modal__q">Where should we send your custom plan?</p>
-                <div className="modal__fields">
-                  {FIELDS.map((field) => (
-                    <input
-                      key={field.name}
-                      name={field.name}
-                      type={field.type}
-                      placeholder={field.placeholder}
-                      autoComplete={field.autoComplete}
-                      aria-label={field.placeholder}
-                      value={form[field.name] || ""}
-                      onChange={(e) =>
-                        setForm((prev) => ({ ...prev, [field.name]: e.target.value }))
-                      }
-                    />
-                  ))}
-                </div>
-                <button type="submit" className="btn btn--block" disabled={!canSubmit || pending}>
-                  <span>{pending ? "Sending…" : "Get my roadmap"}</span>
-                  <span className="btn__arrow" aria-hidden="true">
-                    ↗
-                  </span>
-                </button>
-                {error ? (
-                  <p className="modal__error" role="alert">
-                    {error}
-                  </p>
-                ) : null}
-              </form>
-            ) : null}
-          </>
+          </form>
         )}
       </div>
     </div>

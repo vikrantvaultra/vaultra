@@ -72,7 +72,7 @@ export default async function SolutionPage({
               </h1>
               <p className="hero__sub">{solution.lede}</p>
               <div className="hero__ctas">
-                <AuditTrigger label="Audit my workflows" />
+                <AuditTrigger label="Get a free plan" />
                 <Link className="btn-ghost" href="/#calculator">
                   Estimate the ROI
                 </Link>
@@ -104,7 +104,7 @@ export default async function SolutionPage({
               </div>
             ))}
             <p className="stats__tag">
-              <span aria-hidden="true">✦</span> Typical figures · your audit gets exact ones
+              <span aria-hidden="true">✦</span> Typical figures · your free plan has exact ones
             </p>
           </div>
         </section>
@@ -162,7 +162,7 @@ export default async function SolutionPage({
               </p>
             </div>
             <div className="sol-cta__actions">
-              <AuditTrigger label="Get your free roadmap" />
+              <AuditTrigger label="Get a free plan" />
               <Link className="btn-ghost" href="/#solutions">
                 All solutions
               </Link>
