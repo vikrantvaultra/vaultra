@@ -16,6 +16,8 @@ export type Solution = {
   lede: string;
   automate: string[];
   outcomes: { n: string; accent: string; label: string }[];
+  /** Show the ERP integrations band on this solution's page. */
+  erpBand?: boolean;
 };
 
 export const solutions: Solution[] = [
@@ -90,6 +92,7 @@ export const solutions: Solution[] = [
       { n: "~3", accent: " hrs", label: "a day back on data entry" },
       { n: "100", accent: "%", label: "human-approved postings" },
     ],
+    erpBand: true,
   },
   {
     slug: "customer-support",

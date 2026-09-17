@@ -6,6 +6,7 @@ import { Eyebrow } from "@/components/Eyebrow";
 import { Header } from "@/components/Header";
 import { Reveal } from "@/components/Reveal";
 import { Footer } from "@/components/sections/Footer";
+import { Integrations } from "@/components/sections/Integrations";
 import { TrustStrip } from "@/components/sections/TrustStrip";
 import { getSolution, solutions } from "@/lib/solutions";
 
@@ -130,6 +131,8 @@ export default async function SolutionPage({
             </ul>
           </div>
         </section>
+
+        {solution.erpBand && <Integrations />}
 
         <nav className="wrap sol-pager" aria-label="More solutions" data-reveal>
           <Link className="sol-pager__link" href={`/solutions/${prev.slug}`}>

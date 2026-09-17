@@ -1292,6 +1292,91 @@ h3 {
   padding-left: clamp(20px, 4vw, 56px);
 }
 
+/* ---------------------------------------------------- erp integrations */
+
+.integrations {
+  overflow: hidden;
+}
+
+.erp-marquee {
+  --erp-gap: clamp(12px, 1.6vw, 20px);
+  --erp-fade: clamp(24px, 8vw, 140px);
+  overflow: hidden;
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 var(--erp-fade),
+    #000 calc(100% - var(--erp-fade)),
+    transparent
+  );
+}
+
+.erp-marquee__track {
+  display: flex;
+  gap: var(--erp-gap);
+  width: max-content;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  animation: erp-scroll 38s linear infinite;
+}
+
+.erp-marquee:hover .erp-marquee__track {
+  animation-play-state: paused;
+}
+
+.erp-chip {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 24px;
+  border: 1px solid var(--hairline);
+  border-radius: 3px;
+  background: var(--base);
+  font-family: var(--font-mono-stack);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--ink);
+}
+
+.erp-chip::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--mint);
+  flex: none;
+}
+
+@keyframes erp-scroll {
+  to {
+    /* one full copy of the list plus the gap between the two copies */
+    transform: translateX(calc(-50% - var(--erp-gap) / 2));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .erp-marquee {
+    mask-image: none;
+  }
+
+  .erp-marquee__track {
+    animation: none;
+    width: auto;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-inline: var(--gutter);
+  }
+
+  .erp-chip[aria-hidden="true"] {
+    display: none;
+  }
+}
+
 /* --------------------------------------------------------------- footer */
 
 .footer {
