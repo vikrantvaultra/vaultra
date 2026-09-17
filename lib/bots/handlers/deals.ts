@@ -147,10 +147,15 @@ export async function handleDealsMessage(
   subscriber: Subscriber,
   text: string,
 ): Promise<string> {
-  const command = text.toLowerCase().trim();
-
   const adminReply = await handleAdminDeal(text, subscriber.id);
   if (adminReply) return adminReply;
+
+  // Telegram clients send "/start", and its menu offers "/help", "/deals" and
+  // the rest as slash commands — same words, so drop the slash.
+  const command = text
+    .toLowerCase()
+    .trim()
+    .replace(/^\/(?=(start|help|deals|stop|budget|categories)\b)/, "");
 
   if (["stop", "unsubscribe", "band karo"].includes(command)) {
     subscriber.active = false;
